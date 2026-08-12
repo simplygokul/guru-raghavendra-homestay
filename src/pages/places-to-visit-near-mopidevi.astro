@@ -1,0 +1,172 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EnquiryCTA from '../components/EnquiryCTA.astro';
+import { publishedDestinations } from '../data/destinations';
+import { pageSeo } from '../data/seo';
+import { breadcrumbSchema, webPageSchema } from '../lib/schema';
+
+import mopideviImage from '../assets/places/mopidevi-area.jpg';
+import kallepalliImage from '../assets/places/kallepalli.jpg';
+import terraceImage from '../assets/terrace/terrace-overlooking-agricultural-fields.jpg';
+
+const seo = pageSeo.explore;
+
+const jsonLd = [
+  webPageSchema({
+    name: seo.title,
+    description: seo.description,
+    url: 'https://gururaghavendrahomestay.in/places-to-visit-near-mopidevi/',
+  }),
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Places to Visit', path: '/places-to-visit-near-mopidevi/' },
+  ]),
+];
+---
+
+<BaseLayout title={seo.title} description={seo.description} path={seo.path} ogImage={seo.ogImage} jsonLd={jsonLd}>
+  <section class="section explore-hero">
+    <div class="container explore-hero__grid">
+      <div>
+        <p class="eyebrow">Explore nearby</p>
+        <h1>{seo.h1}</h1>
+        <p class="lede">
+          Use Mopidevi as a calm base for temple visits, quiet countryside time and short regional
+          explorations. We publish distances and itineraries only after they are verified.
+        </p>
+      </div>
+      <Image
+        src={terraceImage}
+        alt="Countryside views near the homestay terrace in Mopidevi"
+        widths={[600, 1000]}
+        sizes="(max-width: 900px) 100vw, 48vw"
+        class="explore-hero__img"
+      />
+    </div>
+  </section>
+
+  <section class="section section--muted">
+    <div class="container">
+      <div class="dest-grid">
+        {
+          publishedDestinations.map((place) => {
+            const img =
+              place.id === 'mopidevi-temple'
+                ? mopideviImage
+                : place.id === 'kallepalli'
+                  ? kallepalliImage
+                  : terraceImage;
+            return (
+              <article class="dest-card">
+                <Image
+                  src={img}
+                  alt={place.name}
+                  widths={[400, 800]}
+                  sizes="(max-width: 800px) 100vw, 33vw"
+                />
+                <div class="dest-card__body">
+                  <h2>{place.name}</h2>
+                  <p>{place.whyVisit}</p>
+                  <p class="meta">
+                    {place.distanceKm != null
+                      ? `Approx. ${place.distanceKm} km`
+                      : 'Distance / travel time pending verification'}
+                  </p>
+                  {place.mapsUrl ? (
+                    <a href={place.mapsUrl} target="_blank" rel="noopener noreferrer">
+                      Open in Maps
+                    </a>
+                  ) : null}
+                </div>
+              </article>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow">
+      <p class="eyebrow">Trip ideas</p>
+      <h2>Itineraries coming after route checks</h2>
+      <ul class="ideas">
+        <li>One-day temple-focused visit</li>
+        <li>Relaxed two-day family stay</li>
+        <li>Spiritual circuit around nearby temple towns</li>
+        <li>Leisure / countryside weekend</li>
+      </ul>
+      <p class="meta">
+        These outlines will be filled with practical timing once travel times are confirmed — not SEO filler.
+      </p>
+      <a class="btn btn--primary" href="/stay/">Stay as your base</a>
+    </div>
+  </section>
+
+  <EnquiryCTA />
+</BaseLayout>
+
+<style>
+  .explore-hero__grid {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+  }
+
+  .explore-hero__img {
+    border-radius: var(--radius-lg);
+    width: 100%;
+  }
+
+  .dest-grid {
+    display: grid;
+    gap: 1.15rem;
+  }
+
+  .dest-card {
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .dest-card img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  .dest-card__body {
+    padding: 1.15rem 1.25rem 1.35rem;
+  }
+
+  .dest-card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .dest-card p {
+    color: var(--color-text-muted);
+  }
+
+  .meta {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  .ideas {
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 860px) {
+    .explore-hero__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .dest-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

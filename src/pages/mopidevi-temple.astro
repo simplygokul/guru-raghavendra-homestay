@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EnquiryCTA from '../components/EnquiryCTA.astro';
+import { defaultWhatsAppMessage, whatsappLink } from '../data/property';
+import { pageSeo } from '../data/seo';
+import { breadcrumbSchema, webPageSchema } from '../lib/schema';
+
+const seo = pageSeo.temple;
+const waHref = whatsappLink(
+  'Hello, we are planning a visit to Mopidevi Temple and would like to enquire about staying nearby at Sri Guru Raghavendra HomeStay.',
+);
+
+const jsonLd = [
+  webPageSchema({
+    name: seo.title,
+    description: seo.description,
+    url: 'https://gururaghavendrahomestay.in/mopidevi-temple/',
+  }),
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Mopidevi Temple Guide', path: '/mopidevi-temple/' },
+  ]),
+];
+---
+
+<BaseLayout title={seo.title} description={seo.description} path={seo.path} ogImage={seo.ogImage} jsonLd={jsonLd}>
+  <header class="temple-top section">
+    <div class="container container--narrow">
+      <p class="eyebrow">Mopidevi Temple Guide</p>
+      <h1>{seo.h1}</h1>
+      <p class="lede">
+        A respectful, practical guide for families and devotees visiting Sri Subrahmanyeswara Swamy
+        Temple in Mopidevi — written for usefulness first, not for hard selling.
+      </p>
+    </div>
+  </header>
+
+  <article class="temple-article">
+    <section class="section section--tight">
+      <div class="container container--narrow prose">
+        <h2>Overview</h2>
+        <p>
+          Mopidevi is known for Sri Subrahmanyeswara Swamy Temple, an important spiritual destination
+          in Krishna District, Andhra Pradesh. Many families combine darshan with a calm overnight stay
+          nearby.
+        </p>
+        <p class="pending">
+          Detailed temple history, significance, poojas, festivals, current timings and how-to-reach
+          notes will be published only after verification against credible/current sources near launch.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--muted section--tight">
+      <div class="container container--narrow prose">
+        <h2>Traditional story & significance</h2>
+        <p>
+          Content for the traditional story and religious significance will be paraphrased from
+          official or credible references — never copied verbatim, and never invented.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container mid-cta">
+        <div>
+          <h2>Staying near the temple</h2>
+          <p>
+            If you need a spacious, peaceful place to rest between visits, Sri Guru Raghavendra HomeStay
+            offers family-friendly rooms, kitchen access and local guidance in Mopidevi.
+          </p>
+        </div>
+        <a class="btn btn--primary" href="/stay/">View Stay Options</a>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="container container--narrow prose">
+        <h2>Visitor timings</h2>
+        <p class="pending">Current darshan/pooja timings — pending verification near launch.</p>
+
+        <h2>How to reach</h2>
+        <p class="pending">
+          Routes from Vijayawada, Machilipatnam and other relevant towns — pending verified travel notes.
+        </p>
+
+        <h2>Family visitor tips</h2>
+        <ul>
+          <li>Plan rest time around temple hours, especially with elders and children.</li>
+          <li>Carry water and keep valuables minimal in crowded periods.</li>
+          <li>Ask local hosts for practical orientation once timings and festival dates are confirmed.</li>
+        </ul>
+
+        <h2>Nearby places</h2>
+        <p>
+          For a wider trip beyond the temple, see our
+          <a href="/places-to-visit-near-mopidevi/">places to visit near Mopidevi</a> guide.
+        </p>
+      </div>
+    </section>
+  </article>
+
+  <EnquiryCTA
+    title="Need a calm place after darshan?"
+    text="Message us on WhatsApp with your dates — flexible check-in may be possible subject to prior confirmation."
+  />
+</BaseLayout>
+
+<style>
+  .temple-top {
+    padding-bottom: 1rem;
+  }
+
+  .prose h2 {
+    margin-top: 1.75rem;
+  }
+
+  .prose p,
+  .prose li {
+    color: var(--color-text-muted);
+  }
+
+  .pending {
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
+
+  .mid-cta {
+    display: grid;
+    gap: 1.25rem;
+    align-items: center;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+  }
+
+  .mid-cta p {
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  @media (min-width: 800px) {
+    .mid-cta {
+      grid-template-columns: 1fr auto;
+    }
+  }
+</style>

@@ -1,0 +1,282 @@
+---
+import { Image } from 'astro:assets';
+import { businessName, contact, defaultWhatsAppMessage, whatsappLink } from '../data/property';
+import { navItems } from '../data/seo';
+import brandLogo from '../assets/property/brand-logo-gururaghavendra-homestay.png';
+
+const pathname = Astro.url.pathname;
+const waHref = whatsappLink(defaultWhatsAppMessage);
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-header__brand" href="/">
+      <Image
+        src={brandLogo}
+        alt=""
+        width={72}
+        height={61}
+        densities={[1, 2]}
+        quality={90}
+        class="site-header__logo"
+        loading="eager"
+      />
+      <span class="site-header__brand-text">
+        <span class="site-header__brand-name">{businessName}</span>
+        <span class="site-header__brand-place">Mopidevi</span>
+      </span>
+    </a>
+
+    <nav class="site-header__nav" aria-label="Primary">
+      <ul>
+        {
+          navItems.map((item) => {
+            const active =
+              item.href === '/'
+                ? pathname === '/'
+                : pathname.startsWith(item.href.replace(/\/$/, '')) || pathname === item.href;
+            return (
+              <li>
+                <a href={item.href} aria-current={active ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a
+        class="btn btn--primary site-header__cta"
+        href={waHref}
+        data-analytics="whatsapp_click"
+        data-location="header"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        WhatsApp
+      </a>
+      <button
+        class="site-header__menu"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        data-menu-toggle
+      >
+        <span class="sr-only">Menu</span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-nav" class="site-header__drawer" hidden data-menu-panel>
+    <nav aria-label="Mobile">
+      <ul>
+        {
+          navItems.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+      <a
+        class="btn btn--wa"
+        href={waHref}
+        data-analytics="whatsapp_click"
+        data-location="mobile-menu"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        WhatsApp {contact.whatsapp.display}
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('[data-menu-toggle]');
+  const panel = document.querySelector('[data-menu-panel]');
+  if (toggle && panel) {
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      if (open) panel.setAttribute('hidden', '');
+      else panel.removeAttribute('hidden');
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgb(215 211 201 / 0.7);
+  }
+
+  .site-header__inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--space-4);
+    min-height: var(--header-h);
+  }
+
+  .site-header__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    min-width: 0;
+  }
+
+  .site-header__brand:hover {
+    color: inherit;
+  }
+
+  .site-header__logo {
+    width: 2.65rem;
+    height: auto;
+    flex-shrink: 0;
+    border-radius: 0.35rem;
+  }
+
+  .site-header__brand-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .site-header__brand-name {
+    font-family: var(--font-display);
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.15;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .site-header__brand-place {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .site-header__nav {
+    display: none;
+  }
+
+  .site-header__nav ul {
+    display: flex;
+    gap: 1.35rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .site-header__nav a {
+    text-decoration: none;
+    font-size: var(--text-sm);
+    font-weight: 560;
+    color: var(--color-text-muted);
+    padding-block: 0.35rem;
+    border-bottom: 2px solid transparent;
+  }
+
+  .site-header__nav a[aria-current='page'],
+  .site-header__nav a:hover {
+    color: var(--color-text);
+    border-bottom-color: var(--color-accent);
+  }
+
+  .site-header__actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .site-header__cta {
+    display: none;
+    min-height: 2.5rem;
+    padding-inline: 1rem;
+  }
+
+  .site-header__menu {
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-bg-elevated);
+    display: inline-grid;
+    place-content: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .site-header__menu span:not(.sr-only) {
+    display: block;
+    width: 1rem;
+    height: 1.5px;
+    background: var(--color-text);
+  }
+
+  .site-header__drawer {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+    padding: var(--space-5) var(--gutter) var(--space-6);
+  }
+
+  .site-header__drawer ul {
+    list-style: none;
+    margin: 0 0 var(--space-5);
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .site-header__drawer a:not(.btn) {
+    display: block;
+    text-decoration: none;
+    padding: 0.85rem 0.25rem;
+    font-size: 1.15rem;
+    font-family: var(--font-display);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 960px) {
+    .site-header__inner {
+      grid-template-columns: auto 1fr auto;
+    }
+
+    .site-header__nav {
+      display: block;
+      justify-self: center;
+    }
+
+    .site-header__cta {
+      display: inline-flex;
+    }
+
+    .site-header__menu,
+    .site-header__drawer {
+      display: none !important;
+    }
+
+    .site-header__brand-name {
+      font-size: 1.05rem;
+      white-space: normal;
+    }
+
+    .site-header__logo {
+      width: 3rem;
+    }
+  }
+</style>

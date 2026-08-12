@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page not found | Sri Guru Raghavendra HomeStay"
+  description="The page you requested could not be found. Return home or contact Sri Guru Raghavendra HomeStay in Mopidevi."
+  path="/404/"
+>
+  <section class="section">
+    <div class="container container--narrow notfound">
+      <p class="eyebrow">404</p>
+      <h1>This page is not available</h1>
+      <p class="lede">
+        The link may be outdated. You can return home, view stay details, or contact us directly.
+      </p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="/">Go to Home</a>
+        <a class="btn btn--secondary" href="/contact/">Contact</a>
+        <a class="btn btn--secondary" href="/stay/">Stay</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound {
+    text-align: left;
+    padding-block: 2rem;
+  }
+</style>

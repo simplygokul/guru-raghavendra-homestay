@@ -1,0 +1,104 @@
+---
+import { defaultWhatsAppMessage, whatsappLink, contact, location } from '../data/property';
+
+type Props = {
+  title?: string;
+  text?: string;
+  tone?: 'light' | 'deep';
+};
+
+const {
+  title = 'Ready to plan your stay?',
+  text = 'Share your dates and guest count on WhatsApp — we will help you settle in comfortably.',
+  tone = 'deep',
+} = Astro.props;
+
+const waHref = whatsappLink(defaultWhatsAppMessage);
+---
+
+<section class:list={['enquiry-cta', tone === 'deep' && 'enquiry-cta--deep']}>
+  <div class="container enquiry-cta__inner">
+    <div>
+      <h2>{title}</h2>
+      <p>{text}</p>
+    </div>
+    <div class="btn-row">
+      <a
+        class={tone === 'deep' ? 'btn btn--wa' : 'btn btn--primary'}
+        href={waHref}
+        data-analytics="whatsapp_click"
+        data-location="enquiry-cta"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        WhatsApp {contact.whatsapp.display}
+      </a>
+      {
+        contact.phone.href ? (
+          <a
+            class={tone === 'deep' ? 'btn btn--ghost-light' : 'btn btn--secondary'}
+            href={contact.phone.href}
+            data-analytics="call_click"
+            data-location="enquiry-cta"
+          >
+            Call Us
+          </a>
+        ) : location.mapsDirectionsUrl ? (
+          <a
+            class={tone === 'deep' ? 'btn btn--ghost-light' : 'btn btn--secondary'}
+            href={location.mapsDirectionsUrl}
+            data-analytics="directions_click"
+            data-location="enquiry-cta"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Get Directions
+          </a>
+        ) : (
+          <a
+            class={tone === 'deep' ? 'btn btn--ghost-light' : 'btn btn--secondary'}
+            href="/contact/"
+          >
+            Contact & Location
+          </a>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .enquiry-cta {
+    padding-block: clamp(3rem, 6vw, 4.5rem);
+    background: var(--color-bg-muted);
+  }
+
+  .enquiry-cta--deep {
+    background:
+      linear-gradient(135deg, #2a332c 0%, #3a4a3c 55%, #2f3b31 100%);
+    color: var(--color-text-inverse);
+  }
+
+  .enquiry-cta--deep h2 {
+    color: white;
+  }
+
+  .enquiry-cta__inner {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .enquiry-cta p {
+    color: inherit;
+    opacity: 0.82;
+    max-width: 36rem;
+    margin: 0;
+  }
+
+  @media (min-width: 860px) {
+    .enquiry-cta__inner {
+      grid-template-columns: 1.4fr auto;
+      align-items: center;
+    }
+  }
+</style>

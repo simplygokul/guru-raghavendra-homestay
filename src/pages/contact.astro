@@ -1,0 +1,216 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EnquiryCTA from '../components/EnquiryCTA.astro';
+import FAQ from '../components/FAQ.astro';
+import {
+  businessName,
+  contact,
+  defaultWhatsAppMessage,
+  location,
+  policies,
+  whatsappLink,
+} from '../data/property';
+import { publishedFaqs } from '../data/faq';
+import { pageSeo } from '../data/seo';
+import { breadcrumbSchema, lodgingBusinessSchema, webPageSchema } from '../lib/schema';
+
+const seo = pageSeo.contact;
+const waHref = whatsappLink(defaultWhatsAppMessage);
+
+const jsonLd = [
+  lodgingBusinessSchema(),
+  webPageSchema({
+    name: seo.title,
+    description: seo.description,
+    url: 'https://gururaghavendrahomestay.in/contact/',
+  }),
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Contact', path: '/contact/' },
+  ]),
+];
+---
+
+<BaseLayout title={seo.title} description={seo.description} path={seo.path} ogImage={seo.ogImage} jsonLd={jsonLd}>
+  <section class="section contact">
+    <div class="container contact__grid">
+      <div>
+        <p class="eyebrow">Contact & Location</p>
+        <h1>{seo.h1}</h1>
+        <p class="lede">
+          Reach us directly on WhatsApp or phone. No complicated forms — just a clear conversation about
+          dates and guests.
+        </p>
+
+        <dl class="details">
+          <div>
+            <dt>Business</dt>
+            <dd>{businessName}</dd>
+          </div>
+          <div>
+            <dt>Location</dt>
+            <dd>
+              {
+                location.streetAddress
+                  ? `${location.streetAddress}, `
+                  : ''
+              }
+              {location.locality}, {location.district}, {location.region}, {location.country}
+            </dd>
+          </div>
+          <div>
+            <dt>WhatsApp</dt>
+            <dd>
+              <a
+                href={waHref}
+                data-analytics="whatsapp_click"
+                data-location="contact"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {contact.whatsapp.display}
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt>Phone</dt>
+            <dd>
+              {
+                contact.phone.display && contact.phone.href ? (
+                  <a href={contact.phone.href} data-analytics="call_click" data-location="contact">
+                    {contact.phone.display}
+                  </a>
+                ) : (
+                  <span class="pending">Primary call number pending confirmation</span>
+                )
+              }
+            </dd>
+          </div>
+          <div>
+            <dt>Check-in note</dt>
+            <dd>{policies.flexibleCheckIn}</dd>
+          </div>
+        </dl>
+
+        <div class="btn-row">
+          <a
+            class="btn btn--wa"
+            href={waHref}
+            data-analytics="whatsapp_click"
+            data-location="contact-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            WhatsApp Enquiry
+          </a>
+          {
+            contact.phone.href ? (
+              <a
+                class="btn btn--primary"
+                href={contact.phone.href}
+                data-analytics="call_click"
+                data-location="contact-primary"
+              >
+                Call Us
+              </a>
+            ) : null
+          }
+          {
+            location.mapsDirectionsUrl ? (
+              <a
+                class="btn btn--secondary"
+                href={location.mapsDirectionsUrl}
+                data-analytics="directions_click"
+                data-location="contact-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Get Directions
+              </a>
+            ) : (
+              <span class="pending">Directions link pending map pin confirmation</span>
+            )
+          }
+        </div>
+      </div>
+
+      <div class="map-panel" aria-label="Map">
+        {
+          location.mapsEmbedUrl ? (
+            <iframe
+              title={`Map showing ${businessName}`}
+              src={location.mapsEmbedUrl}
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            />
+          ) : (
+            <div class="map-panel__placeholder">
+              <p>Google Map embed will appear here after the GBP pin and address are verified.</p>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <FAQ items={publishedFaqs} />
+  <EnquiryCTA />
+</BaseLayout>
+
+<style>
+  .contact__grid {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .details {
+    margin: 1.5rem 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .details dt {
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .details dd {
+    margin: 0.25rem 0 0;
+  }
+
+  .pending {
+    color: var(--color-text-muted);
+    font-style: italic;
+    font-size: var(--text-sm);
+  }
+
+  .map-panel,
+  .map-panel iframe,
+  .map-panel__placeholder {
+    width: 100%;
+    min-height: 22rem;
+    border: 0;
+    border-radius: var(--radius-lg);
+  }
+
+  .map-panel__placeholder {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--color-bg-muted);
+    border: 1px dashed var(--color-border);
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 900px) {
+    .contact__grid {
+      grid-template-columns: 1fr 1.05fr;
+      align-items: start;
+    }
+  }
+</style>

@@ -1,0 +1,173 @@
+---
+import {
+  businessName,
+  brandLine,
+  contact,
+  defaultWhatsAppMessage,
+  location,
+  whatsappLink,
+} from '../data/property';
+import { navItems } from '../data/seo';
+
+const waHref = whatsappLink(defaultWhatsAppMessage);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <div>
+      <p class="site-footer__name">{businessName}</p>
+      <p class="site-footer__tag">{brandLine}</p>
+      <p class="site-footer__nap">
+        {location.locality}, {location.district}, {location.region}, {location.country}
+      </p>
+      <p class="site-footer__nap">
+        WhatsApp:
+        <a
+          href={waHref}
+          data-analytics="whatsapp_click"
+          data-location="footer"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {contact.whatsapp.display}
+        </a>
+      </p>
+      {
+        contact.phone.display && contact.phone.href ? (
+          <p class="site-footer__nap">
+            Call:{' '}
+            <a href={contact.phone.href} data-analytics="call_click" data-location="footer">
+              {contact.phone.display}
+            </a>
+          </p>
+        ) : null
+      }
+    </div>
+
+    <nav aria-label="Footer">
+      <ul class="site-footer__links">
+        {
+          navItems.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="site-footer__cta">
+      <a
+        class="btn btn--wa"
+        href={waHref}
+        data-analytics="whatsapp_click"
+        data-location="footer-cta"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        WhatsApp Enquiry
+      </a>
+      {
+        location.mapsDirectionsUrl ? (
+          <a
+            class="btn btn--secondary"
+            href={location.mapsDirectionsUrl}
+            data-analytics="directions_click"
+            data-location="footer"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Get Directions
+          </a>
+        ) : (
+          <a class="btn btn--secondary" href="/contact/">
+            Contact & Location
+          </a>
+        )
+      }
+    </div>
+  </div>
+
+  <div class="site-footer__base">
+    <div class="container site-footer__base-inner">
+      <p>© {year} {businessName}. All rights reserved.</p>
+      <p>Website by Saradhi Tech</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #1c221e;
+    color: rgb(247 246 242 / 0.88);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    gap: var(--space-7);
+    padding-block: var(--space-8);
+  }
+
+  .site-footer__name {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    margin: 0 0 var(--space-2);
+    color: white;
+  }
+
+  .site-footer__tag,
+  .site-footer__nap {
+    color: rgb(247 246 242 / 0.72);
+    margin: 0 0 var(--space-2);
+  }
+
+  .site-footer a {
+    color: white;
+  }
+
+  .site-footer__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .site-footer__links a {
+    text-decoration: none;
+    font-weight: 560;
+  }
+
+  .site-footer__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-content: start;
+  }
+
+  .site-footer__base {
+    border-top: 1px solid rgb(247 246 242 / 0.12);
+  }
+
+  .site-footer__base-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-block: var(--space-4);
+    font-size: var(--text-xs);
+    color: rgb(247 246 242 / 0.55);
+  }
+
+  .site-footer__base-inner p {
+    margin: 0;
+  }
+
+  @media (min-width: 860px) {
+    .site-footer__grid {
+      grid-template-columns: 1.4fr 0.8fr 1fr;
+      align-items: start;
+    }
+  }
+</style>

@@ -1,0 +1,46 @@
+---
+/**
+ * Lightweight analytics helper.
+ * Wire GA4 measurement ID via PUBLIC_GA_MEASUREMENT_ID when ready.
+ * Events are prepared on data-analytics attributes across the site.
+ */
+const measurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID as string | undefined;
+---
+
+{
+  measurementId ? (
+    <>
+      <script async src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`} />
+      <script is:inline define:vars={{ measurementId }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', measurementId, { anonymize_ip: true });
+
+        document.addEventListener('click', (event) => {
+          const target = event.target instanceof Element ? event.target.closest('[data-analytics]') : null;
+          if (!target) return;
+          const name = target.getAttribute('data-analytics');
+          if (!name) return;
+          gtag('event', name, {
+            location: target.getAttribute('data-location') || undefined,
+          });
+        });
+      </script>
+    </>
+  ) : (
+    <script is:inline>
+      document.addEventListener('click', (event) => {
+        const target = event.target instanceof Element ? event.target.closest('[data-analytics]') : null;
+        if (!target) return;
+        const name = target.getAttribute('data-analytics');
+        if (!name) return;
+        if (window.console && console.debug) {
+          console.debug('[analytics]', name, target.getAttribute('data-location'));
+        }
+      });
+    </script>
+  )
+}

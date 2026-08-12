@@ -1,0 +1,270 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EnquiryCTA from '../components/EnquiryCTA.astro';
+import FAQ from '../components/FAQ.astro';
+import { accommodationUnits, accommodationHighlights } from '../data/accommodation';
+import { availableAmenities } from '../data/amenities';
+import { publishedFaqs } from '../data/faq';
+import { policies, stayEnquiryMessage, whatsappLink } from '../data/property';
+import { pageSeo } from '../data/seo';
+import { breadcrumbSchema, faqPageSchema, webPageSchema } from '../lib/schema';
+
+import livingImage from '../assets/rooms/spacious-common-living-area.jpg';
+import bedroomImage from '../assets/rooms/spacious-bedroom-carved-wood-bed.jpg';
+import bathroomImage from '../assets/rooms/clean-attached-bathroom.jpg';
+import bedroomAlt from '../assets/rooms/bedroom-built-in-shelving.jpg';
+import terraceImage from '../assets/terrace/terrace-overlooking-agricultural-fields.jpg';
+
+const seo = pageSeo.stay;
+const unit = accommodationUnits[0];
+const waHref = whatsappLink(stayEnquiryMessage(unit.name));
+
+const highlightImages = [bedroomImage, livingImage, bathroomImage];
+
+const faqSchema = faqPageSchema(
+  publishedFaqs.map((f) => ({ question: f.question, answer: f.answer! })),
+);
+
+const jsonLd = [
+  webPageSchema({
+    name: seo.title,
+    description: seo.description,
+    url: 'https://gururaghavendrahomestay.in/stay/',
+  }),
+  breadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Stay', path: '/stay/' },
+  ]),
+  faqSchema,
+].filter(Boolean);
+---
+
+<BaseLayout title={seo.title} description={seo.description} path={seo.path} ogImage={seo.ogImage} jsonLd={jsonLd}>
+  <section class="stay-hero section">
+    <div class="container stay-hero__grid">
+      <div>
+        <p class="eyebrow">Stay / Accommodation</p>
+        <h1>{seo.h1}</h1>
+        <p class="lede">{unit.summary}</p>
+        <div class="btn-row">
+          <a
+            class="btn btn--wa"
+            href={waHref}
+            data-analytics="stay_enquiry_click"
+            data-location="stay-hero"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Ask About This Stay
+          </a>
+          <a class="btn btn--secondary" href="/gallery/">See Gallery</a>
+        </div>
+      </div>
+      <Image
+        src={livingImage}
+        alt="Spacious common living area suitable for families and groups"
+        widths={[600, 1000, 1400]}
+        sizes="(max-width: 900px) 100vw, 50vw"
+        class="stay-hero__img"
+      />
+    </div>
+  </section>
+
+  <section class="section section--muted">
+    <div class="container">
+      <p class="eyebrow">What guests receive</p>
+      <h2>Accommodation at a glance</h2>
+      <div class="facts">
+        <article>
+          <h3>Kitchen</h3>
+          <p>Kitchen facility available for home-style cooking.</p>
+        </article>
+        <article>
+          <h3>Terrace</h3>
+          <p>Terrace access with agricultural countryside views.</p>
+        </article>
+        <article>
+          <h3>Spaces</h3>
+          <p>Spacious bedrooms and open common areas for families and groups.</p>
+        </article>
+        <article>
+          <h3>Structure</h3>
+          <p class="pending">Exact floors/units, bed counts and guest capacity — pending owner confirmation.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow">Inside the stay</p>
+      <h2>Rooms & shared spaces</h2>
+      <div class="highlights">
+        {
+          accommodationHighlights.map((item, i) => (
+            <article class="highlight">
+              <Image
+                src={highlightImages[i]}
+                alt={item.title}
+                widths={[400, 700, 1000]}
+                sizes="(max-width: 900px) 100vw, 33vw"
+              />
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--muted">
+    <div class="container stay-split">
+      <div>
+        <p class="eyebrow">Verified facilities</p>
+        <h2>Amenities we can confirm today</h2>
+        <ul class="amenity-list">
+          {availableAmenities.map((a) => <li>{a.label}</li>)}
+        </ul>
+        <p class="pending">Wi-Fi, parking capacity, lift, power backup, TV and cooking equipment details remain pending.</p>
+      </div>
+      <div>
+        <Image
+          src={bedroomAlt}
+          alt="Bedroom with built-in shelving and air conditioning"
+          widths={[500, 900]}
+          sizes="(max-width: 900px) 100vw, 45vw"
+          class="stay-split__img"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container stay-split">
+      <Image
+        src={terraceImage}
+        alt="Terrace overlooking green fields"
+        widths={[500, 900]}
+        sizes="(max-width: 900px) 100vw, 45vw"
+        class="stay-split__img"
+      />
+      <div>
+        <p class="eyebrow">Flexible arrival</p>
+        <h2>Check-in for temple visitors</h2>
+        <p class="lede">{policies.flexibleCheckIn}</p>
+        <a
+          class="btn btn--primary"
+          href={waHref}
+          data-analytics="stay_enquiry_click"
+          data-location="stay-checkin"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Confirm Availability on WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <FAQ items={publishedFaqs} title="Booking & stay questions" />
+  <EnquiryCTA title="Ready to check dates?" text="Tell us the unit interest, dates and guest count — we reply on WhatsApp with clear next steps." />
+</BaseLayout>
+
+<style>
+  .stay-hero__grid,
+  .stay-split {
+    display: grid;
+    gap: var(--space-6);
+    align-items: center;
+  }
+
+  .stay-hero__img,
+  .stay-split__img,
+  .highlight img {
+    border-radius: var(--radius-lg);
+    width: 100%;
+  }
+
+  .facts,
+  .highlights {
+    display: grid;
+    gap: 1rem;
+    margin-top: var(--space-5);
+  }
+
+  .facts article,
+  .highlight {
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.15rem;
+  }
+
+  .highlight {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .highlight h3,
+  .highlight p {
+    padding-inline: 1.1rem;
+  }
+
+  .highlight h3 {
+    margin-top: 1rem;
+    font-size: 1.15rem;
+  }
+
+  .highlight p {
+    color: var(--color-text-muted);
+    padding-bottom: 1.15rem;
+  }
+
+  .amenity-list {
+    display: grid;
+    gap: 0.55rem;
+    padding: 0;
+    margin: 1rem 0;
+    list-style: none;
+  }
+
+  .amenity-list li {
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .amenity-list li::before {
+    content: '';
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--color-green);
+    position: absolute;
+    left: 0;
+    top: 0.55rem;
+  }
+
+  .pending {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    font-style: italic;
+  }
+
+  @media (min-width: 800px) {
+    .facts {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .highlights {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stay-hero__grid,
+    .stay-split {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+    }
+  }
+</style>

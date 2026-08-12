@@ -1,0 +1,120 @@
+---
+import {
+  contact,
+  defaultWhatsAppMessage,
+  location,
+  whatsappLink,
+} from '../data/property';
+
+const waHref = whatsappLink(defaultWhatsAppMessage);
+const directionsHref = location.mapsDirectionsUrl ?? '/contact/';
+const hasPhone = Boolean(contact.phone.href && contact.phone.display);
+---
+
+<div class="mobile-bar" role="navigation" aria-label="Quick actions">
+  {
+    hasPhone ? (
+      <a
+        class="mobile-bar__item"
+        href={contact.phone.href!}
+        data-analytics="call_click"
+        data-location="mobile-bar"
+      >
+        <svg class="mobile-bar__icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M6.5 4.5h3l1.5 4-2 1.5a12 12 0 0 0 5 5l1.5-2 4 1.5v3a2 2 0 0 1-2 2A14.5 14.5 0 0 1 4.5 6.5a2 2 0 0 1 2-2Z" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>Call</span>
+      </a>
+    ) : (
+      <a
+        class="mobile-bar__item"
+        href={waHref}
+        data-analytics="whatsapp_click"
+        data-location="mobile-bar-call-fallback"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg class="mobile-bar__icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M6.5 4.5h3l1.5 4-2 1.5a12 12 0 0 0 5 5l1.5-2 4 1.5v3a2 2 0 0 1-2 2A14.5 14.5 0 0 1 4.5 6.5a2 2 0 0 1 2-2Z" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>Enquire</span>
+      </a>
+    )
+  }
+  <a
+    class="mobile-bar__item mobile-bar__item--primary"
+    href={waHref}
+    data-analytics="whatsapp_click"
+    data-location="mobile-bar"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <svg class="mobile-bar__icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M7 19.5 5 21v-4.2A8.5 8.5 0 1 1 12.5 20" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M9.2 11.2c1.5 2.2 3.4 3.7 5.6 4.6" stroke-linecap="round" />
+    </svg>
+    <span>WhatsApp</span>
+  </a>
+  <a
+    class="mobile-bar__item"
+    href={directionsHref}
+    data-analytics="directions_click"
+    data-location="mobile-bar"
+    target={location.mapsDirectionsUrl ? '_blank' : undefined}
+    rel={location.mapsDirectionsUrl ? 'noopener noreferrer' : undefined}
+  >
+    <svg class="mobile-bar__icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10Z" stroke-linejoin="round" />
+      <circle cx="12" cy="11" r="2.2" />
+    </svg>
+    <span>Directions</span>
+  </a>
+</div>
+
+<style>
+  .mobile-bar {
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 60;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr 1fr;
+    gap: 0.35rem;
+    min-height: var(--mobile-bar-h);
+    padding: 0.45rem 0.55rem calc(0.45rem + env(safe-area-inset-bottom, 0px));
+    background: color-mix(in srgb, #1c221e 94%, transparent);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgb(247 246 242 / 0.12);
+  }
+
+  .mobile-bar__item {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    text-decoration: none;
+    color: rgb(247 246 242 / 0.88);
+    font-size: 0.72rem;
+    font-weight: 650;
+    letter-spacing: 0.02em;
+    border-radius: 0.7rem;
+    min-height: 3.1rem;
+  }
+
+  .mobile-bar__item--primary {
+    background: var(--color-wa);
+    color: white;
+  }
+
+  .mobile-bar__icon {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-bar {
+      display: none;
+    }
+  }
+</style>
