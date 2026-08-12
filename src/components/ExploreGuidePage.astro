@@ -1,0 +1,309 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EnquiryCTA from '../components/EnquiryCTA.astro';
+import LanguageSwitch from '../components/LanguageSwitch.astro';
+import type { ExploreGuideContent, ExplorePlace } from '../data/exploreGuide';
+import { defaultWhatsAppMessage, whatsappLink } from '../data/property';
+import { breadcrumbSchema, webPageSchema } from '../lib/schema';
+
+import fields from '../assets/terrace/terrace-overlooking-agricultural-fields.jpg';
+import countryside from '../assets/terrace/countryside-panorama.jpg';
+import mopidevi from '../assets/places/mopidevi-area.jpg';
+import kallepalli from '../assets/places/kallepalli.jpg';
+import local from '../assets/places/mopidevi-local-context.jpg';
+
+type Props = { content: ExploreGuideContent };
+const { content } = Astro.props;
+const waHref = whatsappLink(defaultWhatsAppMessage);
+
+const imageFor = (place: ExplorePlace) => {
+  if (place.id === 'hamsaladeevi' || place.id === 'manginapudi') return countryside;
+  if (place.id === 'pedakallepalli') return kallepalli;
+  if (place.id === 'diviseema') return fields;
+  if (place.id === 'vijayawada') return mopidevi;
+  return local;
+};
+
+const order: ExplorePlace['group'][] = ['nearby', 'halfday', 'culture', 'fullday', 'countryside'];
+const featured = content.places.find((p) => p.featured) ?? content.places[0];
+
+const jsonLd = [
+  webPageSchema({
+    name: content.title,
+    description: content.description,
+    url: `https://gururaghavendrahomestay.in${content.path}`,
+  }),
+  breadcrumbSchema([
+    { name: content.lang === 'te' ? 'హోమ్' : 'Home', path: '/' },
+    { name: content.h1, path: content.path },
+  ]),
+];
+
+const alts = [
+  { hreflang: 'en-IN', path: content.lang === 'en' ? content.path : content.alternatePath },
+  { hreflang: 'te-IN', path: content.lang === 'te' ? content.path : content.alternatePath },
+  { hreflang: 'x-default', path: '/places-to-visit-near-mopidevi/' },
+];
+
+function mapsHref(query?: string) {
+  if (!query) return null;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+---
+
+<BaseLayout
+  title={content.title}
+  description={content.description}
+  path={content.path}
+  ogImage="/og/explore.jpg"
+  jsonLd={jsonLd}
+  lang={content.lang}
+  alternateLanguages={alts}
+>
+  <section class="explore-open section--chapter">
+    <div class="explore-open__media">
+      <Image
+        src={fields}
+        alt=""
+        widths={[900, 1400, 2000]}
+        sizes="100vw"
+        quality={82}
+        class="explore-open__img"
+      />
+      <div class="explore-open__shade"></div>
+    </div>
+    <div class="container explore-open__content">
+      <p class="eyebrow">{content.lang === 'te' ? 'అన్వేషణ' : 'Explore'}</p>
+      <LanguageSwitch
+        enHref="/places-to-visit-near-mopidevi/"
+        teHref="/te/places-to-visit-near-mopidevi/"
+        current={content.lang}
+      />
+      <h1>{content.h1}</h1>
+      <p>{content.intro[0]}</p>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container container--narrow prose-lead">
+      <p>{content.intro[1]}</p>
+    </div>
+  </section>
+
+  <section class="section feature">
+    <div class="container feature__grid">
+      <figure>
+        <Image
+          src={imageFor(featured)}
+          alt={featured.name}
+          widths={[800, 1200]}
+          sizes="(max-width: 900px) 100vw, 56vw"
+          quality={80}
+        />
+      </figure>
+      <div>
+        <p class="eyebrow">{content.groupLabels[featured.group]}</p>
+        <h2>{featured.name}</h2>
+        <p class="lede">{featured.text}</p>
+        {
+          mapsHref(featured.mapsQuery) ? (
+            <a
+              class="btn btn--secondary"
+              href={mapsHref(featured.mapsQuery)!}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-analytics="directions_click"
+              data-location="explore-featured"
+            >
+              {content.lang === 'te' ? 'Maps లో చూడండి' : 'Open in Maps'}
+            </a>
+          ) : null
+        }
+      </div>
+    </div>
+  </section>
+
+  {
+    order.map((group) => {
+      const places = content.places.filter((p) => p.group === group && p.id !== featured.id);
+      if (!places.length) return null;
+      const isMajor = group === 'halfday' || group === 'culture';
+      return (
+        <section class:list={['section--tight', group === 'culture' && 'section--muted']}>
+          <div class="container">
+            <div class="group-head">
+              <h2>{content.groupLabels[group]}</h2>
+            </div>
+            <div class:list={['place-list', isMajor && 'place-list--major']}>
+              {places.map((place) => (
+                <article class:list={['place', isMajor && 'place--major']}>
+                  {isMajor ? (
+                    <Image
+                      src={imageFor(place)}
+                      alt={place.name}
+                      widths={[500, 900]}
+                      sizes="(max-width: 800px) 100vw, 46vw"
+                      quality={76}
+                    />
+                  ) : null}
+                  <div>
+                    <h3>{place.name}</h3>
+                    <p>{place.text}</p>
+                    {mapsHref(place.mapsQuery) ? (
+                      <a
+                        href={mapsHref(place.mapsQuery)!}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-analytics="directions_click"
+                        data-location={`explore-${place.id}`}
+                      >
+                        {content.lang === 'te' ? 'Maps లో చూడండి' : 'Open in Maps'}
+                      </a>
+                    ) : null}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    })
+  }
+
+  <section class="section--tight section--muted">
+    <div class="container container--narrow">
+      <h2>{content.tripsHeading}</h2>
+      <ul class="trips">
+        {content.trips.map((trip) => <li>{trip}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <EnquiryCTA title={content.ctaTitle} text={content.ctaText} />
+</BaseLayout>
+
+<style>
+  .explore-open {
+    position: relative;
+    min-height: min(52vh, 26rem);
+    display: grid;
+    align-items: end;
+    color: white;
+    overflow: clip;
+  }
+
+  .explore-open__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .explore-open__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .explore-open__shade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgb(18 22 20 / 0.74), transparent 62%);
+  }
+
+  .explore-open__content {
+    position: relative;
+    z-index: 1;
+    padding-block: 3rem 2.25rem;
+    max-width: 40rem;
+  }
+
+  .explore-open h1 {
+    color: white;
+  }
+
+  .explore-open p {
+    color: rgb(247 246 242 / 0.9);
+  }
+
+  .explore-open :global(.lang-switch a) {
+    color: rgb(247 246 242 / 0.75);
+  }
+
+  .explore-open :global(.lang-switch a[aria-current='page']) {
+    color: white;
+    border-bottom-color: #efb48a;
+  }
+
+  .prose-lead p {
+    color: var(--color-text-muted);
+    font-size: 1.08rem;
+    margin: 0;
+  }
+
+  .feature__grid {
+    display: grid;
+    gap: var(--space-5);
+    align-items: center;
+  }
+
+  .feature figure img,
+  .place--major img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+  }
+
+  .group-head {
+    margin-bottom: 1rem;
+  }
+
+  .place-list {
+    display: grid;
+    gap: 1.15rem;
+  }
+
+  .place-list--major {
+    gap: 1.75rem;
+  }
+
+  .place h3 {
+    margin-bottom: 0.4rem;
+    font-size: 1.2rem;
+  }
+
+  .place p {
+    color: var(--color-text-muted);
+    margin-bottom: 0.55rem;
+  }
+
+  .place--major {
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .trips {
+    color: var(--color-text-muted);
+    padding-left: 1.15rem;
+  }
+
+  .trips li {
+    margin-bottom: 0.55rem;
+  }
+
+  @media (min-width: 860px) {
+    .feature__grid {
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: var(--space-7);
+    }
+
+    .place-list:not(.place-list--major) {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem 2rem;
+    }
+
+    .place--major {
+      grid-template-columns: 0.95fr 1.05fr;
+      align-items: center;
+      gap: 1.5rem;
+    }
+  }
+</style>

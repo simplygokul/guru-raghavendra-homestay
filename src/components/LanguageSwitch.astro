@@ -1,0 +1,42 @@
+---
+type Props = {
+  enHref: string;
+  teHref: string;
+  current: 'en' | 'te';
+};
+
+const { enHref, teHref, current } = Astro.props;
+---
+
+<nav class="lang-switch" aria-label={current === 'te' ? 'భాష' : 'Language'}>
+  <a href={enHref} aria-current={current === 'en' ? 'page' : undefined} lang="en">English</a>
+  <span aria-hidden="true">|</span>
+  <a href={teHref} aria-current={current === 'te' ? 'page' : undefined} lang="te">తెలుగు</a>
+</nav>
+
+<style>
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0.35rem 0 1rem;
+    font-size: var(--text-sm);
+    font-weight: 650;
+  }
+
+  .lang-switch a {
+    text-decoration: none;
+    color: var(--color-text-muted);
+    padding: 0.35rem 0.15rem;
+    border-bottom: 2px solid transparent;
+  }
+
+  .lang-switch a[aria-current='page'] {
+    color: var(--color-text);
+    border-bottom-color: var(--color-accent);
+  }
+
+  .lang-switch a:hover {
+    color: var(--color-green);
+  }
+</style>

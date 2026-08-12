@@ -1,0 +1,321 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EnquiryCTA from '../components/EnquiryCTA.astro';
+import LanguageSwitch from '../components/LanguageSwitch.astro';
+import type { TempleGuideContent } from '../data/templeGuide';
+import { defaultWhatsAppMessage, whatsappLink } from '../data/property';
+import { breadcrumbSchema, webPageSchema } from '../lib/schema';
+import templeCue from '../assets/places/mopidevi-local-context.jpg';
+
+type Props = { content: TempleGuideContent };
+const { content } = Astro.props;
+const waHref = whatsappLink(defaultWhatsAppMessage);
+
+const jsonLd = [
+  webPageSchema({
+    name: content.title,
+    description: content.description,
+    url: `https://gururaghavendrahomestay.in${content.path}`,
+  }),
+  breadcrumbSchema([
+    { name: content.lang === 'te' ? 'హోమ్' : 'Home', path: '/' },
+    { name: content.lang === 'te' ? 'ఆలయ గైడ్' : 'Mopidevi Temple Guide', path: content.path },
+  ]),
+];
+
+const alts = [
+  { hreflang: 'en-IN', path: content.lang === 'en' ? content.path : content.alternatePath },
+  { hreflang: 'te-IN', path: content.lang === 'te' ? content.path : content.alternatePath },
+  { hreflang: 'x-default', path: '/mopidevi-temple/' },
+];
+---
+
+<BaseLayout
+  title={content.title}
+  description={content.description}
+  path={content.path}
+  ogImage="/og/temple.jpg"
+  jsonLd={jsonLd}
+  lang={content.lang}
+  alternateLanguages={alts}
+>
+  <header class="guide-hero section--tight">
+    <div class="container guide-hero__grid">
+      <div>
+        <p class="eyebrow">{content.lang === 'te' ? 'ఆలయ గైడ్' : 'Temple guide'}</p>
+        <LanguageSwitch
+          enHref="/mopidevi-temple/"
+          teHref="/te/mopidevi-temple/"
+          current={content.lang}
+        />
+        <h1>{content.h1}</h1>
+        <p class="lede">{content.intro[0]}</p>
+      </div>
+      <figure>
+        <Image
+          src={templeCue}
+          alt={content.lang === 'te' ? 'మోపిదేవి ఆలయ పట్టణంలోని హోమ్‌స్టే' : 'Homestay in Mopidevi temple town'}
+          widths={[700, 1100]}
+          sizes="(max-width: 900px) 100vw, 46vw"
+          quality={80}
+        />
+      </figure>
+    </div>
+  </header>
+
+  <article class="guide">
+    <section class="section--tight">
+      <div class="container container--narrow prose">
+        {content.intro.slice(1).map((p) => <p>{p}</p>)}
+      </div>
+    </section>
+
+    <section class="section--tight" id="serpent">
+      <div class="container container--narrow prose">
+        <h2>{content.serpentHeading}</h2>
+        {content.serpent.map((p) => <p>{p}</p>)}
+      </div>
+    </section>
+
+    <section class="section--tight section--muted" id="swayambhu">
+      <div class="container container--narrow prose">
+        <h2>{content.swayambhuHeading}</h2>
+        {content.swayambhu.map((p) => <p>{p}</p>)}
+      </div>
+    </section>
+
+    <section class="section--tight" id="why">
+      <div class="container container--narrow prose">
+        <h2>{content.whyHeading}</h2>
+        <ul class="why-list">
+          {
+            content.why.map((item) => (
+              <li>
+                <strong>{item.title}</strong>
+                <span>{item.text}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="section--tight rituals" id="rituals">
+      <div class="container">
+        <div class="rituals__intro">
+          <h2>{content.ritualsHeading}</h2>
+        </div>
+        <div class="rituals__table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>{content.lang === 'te' ? 'పూజ / ఆచారం' : 'Pooja / Ritual'}</th>
+                <th>{content.lang === 'te' ? 'సాంప్రదాయ ప్రయోజనం' : 'Traditional purpose'}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                content.rituals.map((r) => (
+                  <tr>
+                    <th scope="row">{r.name}</th>
+                    <td>{r.purpose}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section--tight section--muted" id="festivals">
+      <div class="container container--narrow prose">
+        <h2>{content.festivalsHeading}</h2>
+        <p>{content.festivals}</p>
+      </div>
+    </section>
+
+    <section class="section--tight" id="timings">
+      <div class="container container--narrow prose">
+        <h2>{content.timingsHeading}</h2>
+        <p class="timings-box">{content.timings}</p>
+      </div>
+    </section>
+
+    <section class="mid-cta section--tight">
+      <div class="container mid-cta__inner">
+        <div>
+          <h2>{content.midCtaHeading}</h2>
+          <p>{content.midCtaText}</p>
+        </div>
+        <a
+          class="btn btn--wa"
+          href={waHref}
+          data-analytics="whatsapp_click"
+          data-location="temple-mid"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {content.midCtaLabel}
+        </a>
+      </div>
+    </section>
+
+    <section class="section--tight section--muted" id="tips">
+      <div class="container container--narrow prose">
+        <h2>{content.tipsHeading}</h2>
+        <ul>
+          {content.tips.map((tip) => <li>{tip}</li>)}
+        </ul>
+      </div>
+    </section>
+  </article>
+
+  <EnquiryCTA title={content.finalCtaTitle} text={content.finalCtaText} />
+</BaseLayout>
+
+<style>
+  .guide-hero__grid {
+    display: grid;
+    gap: var(--space-5);
+    align-items: end;
+  }
+
+  .guide-hero figure img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+  }
+
+  .prose h2 {
+    margin-top: 0.25rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .prose p,
+  .prose li {
+    color: var(--color-text-muted);
+  }
+
+  .prose p {
+    margin-bottom: 0.95rem;
+  }
+
+  .why-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0;
+    display: grid;
+    gap: 0.85rem;
+  }
+
+  .why-list li {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .why-list strong {
+    color: var(--color-text);
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  html[lang='te'] .why-list strong {
+    font-family: var(--font-telugu-display);
+  }
+
+  .rituals {
+    background:
+      linear-gradient(180deg, transparent, color-mix(in srgb, var(--color-accent-soft) 35%, white) 8%, transparent 100%);
+  }
+
+  .rituals__intro {
+    margin-bottom: 1rem;
+  }
+
+  .rituals__table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-elevated);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 34rem;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 0.9rem 1rem;
+    vertical-align: top;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  thead th {
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-bg-muted) 70%, white);
+  }
+
+  tbody th {
+    font-family: var(--font-display);
+    font-weight: 600;
+    width: 34%;
+  }
+
+  html[lang='te'] tbody th {
+    font-family: var(--font-telugu-display);
+  }
+
+  tbody td {
+    color: var(--color-text-muted);
+  }
+
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .timings-box {
+    border-left: 3px solid var(--color-accent);
+    padding: 0.35rem 0 0.35rem 1rem;
+    margin: 0;
+  }
+
+  .mid-cta {
+    padding-inline: var(--gutter);
+  }
+
+  .mid-cta__inner {
+    width: min(100%, var(--container));
+    margin-inline: auto;
+    display: grid;
+    gap: 1rem;
+    align-items: center;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.35rem;
+  }
+
+  .mid-cta p {
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  @media (min-width: 860px) {
+    .guide-hero__grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: var(--space-7);
+    }
+
+    .mid-cta__inner {
+      grid-template-columns: 1fr auto;
+    }
+  }
+</style>

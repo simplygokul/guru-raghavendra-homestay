@@ -30,7 +30,7 @@ export const pageSeo: Record<string, PageSeo> = {
     path: '/mopidevi-temple/',
     title: 'Mopidevi Temple Guide | Story, Timings & Visitor Information',
     description:
-      'A useful guide to Sri Subrahmanyeswara Swamy Temple in Mopidevi — traditional story, significance, visitor tips and how to plan your visit.',
+      'A respectful guide to Sri Subrahmanyeswara Swamy Temple in Mopidevi — serpent-penance tradition, swayambhu discovery, poojas, festivals, timings and visitor tips.',
     h1: 'Mopidevi Sri Subrahmanyeswara Swamy Temple Guide',
     ogImage: '/og/temple.jpg',
   },
@@ -38,7 +38,7 @@ export const pageSeo: Record<string, PageSeo> = {
     path: '/places-to-visit-near-mopidevi/',
     title: 'Places to Visit Near Mopidevi | Local Travel Guide',
     description:
-      'Discover places to visit near Mopidevi — temple towns, peaceful surroundings and practical ideas for a wider family or leisure trip.',
+      'Plan trips near Mopidevi — Hamsaladeevi, Manginapudi, Ghantasala, Movva, Kuchipudi, Challapalli and more across the Krishna delta and Diviseema region.',
     h1: 'Places to Visit Near Mopidevi',
     ogImage: '/og/explore.jpg',
   },

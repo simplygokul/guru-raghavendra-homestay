@@ -4,7 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileBookingBar from '../components/MobileBookingBar.astro';
 import Analytics from '../components/Analytics.astro';
-import { businessName } from '../data/property';
+import { businessName, siteUrl } from '../data/property';
 import { canonicalUrl } from '../data/seo';
 
 type Props = {
@@ -13,6 +13,8 @@ type Props = {
   path: string;
   ogImage?: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[] | null;
+  lang?: 'en' | 'te';
+  alternateLanguages?: { hreflang: string; path: string }[];
 };
 
 const {
@@ -21,25 +23,34 @@ const {
   path,
   ogImage = '/og/home.jpg',
   jsonLd = null,
+  lang = 'en',
+  alternateLanguages = [],
 } = Astro.props;
 
 const canonical = canonicalUrl(path);
-const ogImageAbsolute = new URL(ogImage, 'https://gururaghavendrahomestay.in').toString();
+const ogImageAbsolute = new URL(ogImage, siteUrl).toString();
 const schemas = jsonLd
   ? Array.isArray(jsonLd)
     ? jsonLd.filter(Boolean)
     : [jsonLd]
   : [];
+const htmlLang = lang === 'te' ? 'te' : 'en';
+const ogLocale = lang === 'te' ? 'te_IN' : 'en_IN';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {
+      alternateLanguages.map((alt) => (
+        <link rel="alternate" hreflang={alt.hreflang} href={canonicalUrl(alt.path)} />
+      ))
+    }
     <meta name="generator" content={Astro.generator} />
 
     <meta property="og:type" content="website" />
@@ -48,7 +59,7 @@ const schemas = jsonLd
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImageAbsolute} />
-    <meta property="og:locale" content="en_IN" />
+    <meta property="og:locale" content={ogLocale} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -62,7 +73,7 @@ const schemas = jsonLd
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Noto+Sans+Telugu:wght@400;500;600;700&family=Noto+Serif+Telugu:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
 
