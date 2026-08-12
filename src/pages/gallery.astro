@@ -6,24 +6,46 @@ import { galleryCategories } from '../data/gallery';
 import { pageSeo } from '../data/seo';
 import { breadcrumbSchema, webPageSchema } from '../lib/schema';
 
-import exterior from '../assets/property/homestay-exterior-facade-mopidevi.jpg';
+import exteriorHero from '../assets/property/homestay-exterior-hero-daylight.jpg';
+import exteriorEntrance from '../assets/property/exterior-entrance-approach.jpg';
+import exteriorGate from '../assets/property/exterior-front-gate.jpg';
+import exteriorSide from '../assets/property/building-side-view.jpg';
 import living from '../assets/rooms/spacious-common-living-area.jpg';
+import livingWide from '../assets/rooms/common-area-wide.jpg';
+import livingAlt from '../assets/rooms/family-common-living-space.jpg';
 import bedroom from '../assets/rooms/spacious-bedroom-carved-wood-bed.jpg';
 import bedroom2 from '../assets/rooms/bedroom-built-in-shelving.jpg';
+import bedroom3 from '../assets/rooms/bedroom-green-linens.jpg';
+import bedroom4 from '../assets/rooms/bedroom-plaid-bedding.jpg';
 import bathroom from '../assets/rooms/clean-attached-bathroom.jpg';
-import common from '../assets/rooms/family-common-living-space.jpg';
+import bathroom2 from '../assets/rooms/bathroom-alternate.jpg';
+import kitchen from '../assets/rooms/kitchen-pass-through.jpg';
 import terrace from '../assets/terrace/terrace-overlooking-agricultural-fields.jpg';
+import terrace2 from '../assets/terrace/terrace-door-countryside.jpg';
+import terrace3 from '../assets/terrace/fields-from-terrace.jpg';
+import fields from '../assets/terrace/countryside-panorama.jpg';
 
 const seo = pageSeo.gallery;
 
 const images = [
-  { src: exterior, alt: 'Homestay exterior facade in Mopidevi', category: 'exterior', label: 'Exterior' },
+  { src: exteriorHero, alt: 'Homestay exterior in daylight', category: 'exterior', label: 'Exterior' },
+  { src: exteriorEntrance, alt: 'Entrance approach to the homestay', category: 'exterior', label: 'Exterior' },
+  { src: exteriorGate, alt: 'Front gate and entrance steps', category: 'exterior', label: 'Entrance' },
+  { src: exteriorSide, alt: 'Side view of the building', category: 'exterior', label: 'Exterior' },
   { src: living, alt: 'Spacious common living area', category: 'common', label: 'Common Spaces' },
+  { src: livingWide, alt: 'Wide view of the common area', category: 'common', label: 'Common Spaces' },
+  { src: livingAlt, alt: 'Family common living space', category: 'common', label: 'Common Spaces' },
   { src: bedroom, alt: 'Bedroom with carved wooden bed', category: 'rooms', label: 'Rooms' },
   { src: bedroom2, alt: 'Bedroom with built-in shelving', category: 'rooms', label: 'Rooms' },
+  { src: bedroom3, alt: 'Bedroom with green linens', category: 'rooms', label: 'Rooms' },
+  { src: bedroom4, alt: 'Bedroom with plaid bedding', category: 'rooms', label: 'Rooms' },
   { src: bathroom, alt: 'Clean attached bathroom', category: 'bathrooms', label: 'Bathrooms' },
-  { src: common, alt: 'Family common living space', category: 'common', label: 'Common Spaces' },
+  { src: bathroom2, alt: 'Bright bathroom interior', category: 'bathrooms', label: 'Bathrooms' },
+  { src: kitchen, alt: 'Living area with kitchen access', category: 'kitchen', label: 'Kitchen' },
   { src: terrace, alt: 'Terrace overlooking agricultural fields', category: 'terrace', label: 'Terrace' },
+  { src: terrace2, alt: 'Terrace door with countryside beyond', category: 'terrace', label: 'Terrace' },
+  { src: terrace3, alt: 'Fields seen from the terrace', category: 'surroundings', label: 'Surroundings' },
+  { src: fields, alt: 'Countryside panorama around Mopidevi', category: 'surroundings', label: 'Surroundings' },
 ];
 
 const jsonLd = [
@@ -44,10 +66,7 @@ const jsonLd = [
     <div class="container">
       <p class="eyebrow">Gallery</p>
       <h1>{seo.h1}</h1>
-      <p class="lede">
-        Genuine photographs of the rooms, bathrooms, common spaces, terrace and exterior. Kitchen and
-        surroundings sets will expand as curation continues.
-      </p>
+      <p class="lede">Rooms, common spaces, bathrooms, terrace and surroundings — real photographs of the property.</p>
 
       <div class="filters" role="tablist" aria-label="Gallery categories">
         {
@@ -70,7 +89,7 @@ const jsonLd = [
           images.map((image, index) => (
             <button
               type="button"
-              class="grid__item"
+              class:list={['grid__item', index % 5 === 0 && 'grid__item--tall']}
               data-category={image.category}
               data-gallery-open
               data-index={index}
@@ -81,7 +100,8 @@ const jsonLd = [
                 alt={image.alt}
                 widths={[400, 700, 1000]}
                 sizes="(max-width: 700px) 100vw, 33vw"
-                loading={index < 3 ? 'eager' : 'lazy'}
+                loading={index < 4 ? 'eager' : 'lazy'}
+                quality={78}
               />
               <span>{image.label}</span>
             </button>
@@ -172,7 +192,6 @@ const jsonLd = [
     openAt(next.i);
   });
 
-  // Basic swipe on lightbox image
   let touchX = 0;
   dialogImg?.addEventListener('touchstart', (e) => {
     touchX = e.changedTouches[0]?.clientX ?? 0;
@@ -232,6 +251,11 @@ const jsonLd = [
   .grid__item img {
     width: 100%;
     display: block;
+  }
+
+  .grid__item--tall img {
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
   }
 
   .grid__item span {

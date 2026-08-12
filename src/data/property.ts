@@ -1,62 +1,63 @@
 /**
  * Central business identity — single source of truth for UI, metadata, and schema.
- * Fields marked PENDING must not be published as verified facts until owner confirmation.
+ *
+ * GBP source (owner share, Aug 2026): Sri Guru Raghavendra HomeStay knowledge panel.
+ * Conflicts flagged below — do not invent further facts.
  */
 
 export const siteUrl = 'https://gururaghavendrahomestay.in';
 
-/** Working public name — capitalisation/spelling still configurable until GBP/signage lock. */
 export const businessName = 'Sri Guru Raghavendra HomeStay';
 
-/** Roadside signage uses Telugu "Sri Guru Raghavendra Nilayam" — PENDING owner decision on public English name. */
+/**
+ * CONFLICT / NOTES (internal — not for public UI):
+ * - Roadside signage uses Telugu "Sri Guru Raghavendra Nilayam".
+ * - Maps also shows a second nearby listing: "శ్రీ గురు రాఘవేంద్ర నిలయము For రూమ్స్" (plus code 3W9G+64).
+ * - Voice phone still unverified (design mock had +91 94924 35566; not locked).
+ * Public English name follows GBP: Sri Guru Raghavendra HomeStay.
+ */
 export const businessNameAlternates = {
   nilayamTelugu: 'శ్రీ గురురాఘవేంద్ర నిలయం',
-  // Do not put unverified English aliases into schema.alternateName
 } as const;
 
 export const brandLine = 'Stay comfortably. Explore locally. Feel at home.';
 
+/** Address & map from GBP / Maps pin shared by owner. */
 export const location = {
   locality: 'Mopidevi',
   district: 'Krishna District',
   region: 'Andhra Pradesh',
   country: 'India',
-  /** PENDING — exact street/village address for NAP + schema */
-  streetAddress: null as string | null,
-  postalCode: null as string | null,
-  /** PENDING — GBP/map pin coordinates */
-  geo: null as { latitude: number; longitude: number } | null,
-  /** PENDING — Google Maps place / embed URLs once pin confirmed */
-  mapsEmbedUrl: null as string | null,
-  mapsDirectionsUrl: null as string | null,
-  mapsPlaceUrl: null as string | null,
+  streetAddress: 'Chandamama Estates, 3rd line, Sivalayam Road, Mopidevi Lanka',
+  postalCode: '521125',
+  formattedAddress:
+    'Chandamama Estates, 3rd line, Sivalayam Road, Mopidevi, Mopidevi Lanka, Andhra Pradesh 521125',
+  geo: { latitude: 16.0600225, longitude: 80.9253814 },
+  mapsEmbedUrl:
+    'https://maps.google.com/maps?q=16.0600225,80.9253814&z=17&output=embed',
+  mapsDirectionsUrl:
+    'https://www.google.com/maps/dir/?api=1&destination=16.0600225,80.9253814',
+  mapsPlaceUrl:
+    'https://www.google.com/maps/search/?api=1&query=Sri+Guru+Raghavendra+HomeStay+Mopidevi',
 } as const;
 
 export const contact = {
-  /** Confirmed WhatsApp number */
   whatsapp: {
     e164: '918008861819',
     display: '+91 80088 61819',
     href: 'https://wa.me/918008861819',
   },
-  /**
-   * PENDING — primary voice number.
-   * Appears in homepage design reference as +91 94924 35566 but not locked in PRD.
-   */
+  /** Same as WhatsApp — owner confirmed call uses this number. */
   phone: {
-    e164: null as string | null,
-    display: null as string | null,
-    href: null as string | null,
+    e164: '918008861819',
+    display: '+91 80088 61819',
+    href: 'tel:+918008861819',
   },
   email: null as string | null,
   contactHours: null as string | null,
 } as const;
 
 export const policies = {
-  /**
-   * Safe flexible check-in wording until owner confirms firmer policy.
-   * Do not publish 24/7 or guaranteed early check-in claims.
-   */
   flexibleCheckIn:
     'Early or flexible check-in may be available for temple visitors subject to prior confirmation. Please contact us in advance.',
   checkIn: null as string | null,
@@ -71,35 +72,25 @@ export const positioning = {
   experience:
     'Suitable for temple visits, family trips and relaxed weekend stays.',
   hospitality:
-    'Helpful local guidance for nearby places, routes and practical travel needs.',
+    'Approachable local hosts who can help with temple orientation, nearby places and practical routes around Mopidevi.',
 } as const;
 
-/** Verified strengths safe to show publicly (high-level; detail amenities stay in amenities.ts). */
-export const verifiedStrengths = [
+/** Three grouped ideas for homepage — fewer, stronger. */
+export const experiencePillars = [
   {
-    id: 'spacious',
-    title: 'Spacious Rooms',
-    description: 'Large, clean rooms suited to families and groups.',
+    id: 'families',
+    title: 'For families',
+    description: 'Spacious rooms and kitchen convenience so the whole group can settle in together.',
   },
   {
-    id: 'kitchen',
-    title: 'Kitchen Access',
-    description: 'Home-style cooking facility for longer, easier stays.',
+    id: 'experience',
+    title: 'For the experience',
+    description: 'Open terrace, agricultural views and a quieter pace away from the city.',
   },
   {
-    id: 'family',
-    title: 'Family Friendly',
-    description: 'Welcoming spaces for families and group travel.',
-  },
-  {
-    id: 'terrace',
-    title: 'Peaceful Terrace',
-    description: 'Open terrace with agricultural countryside views.',
-  },
-  {
-    id: 'hosts',
-    title: 'Local Hosts',
-    description: 'Practical guidance from people who know Mopidevi.',
+    id: 'trip',
+    title: 'For the trip',
+    description: 'Close to Mopidevi Temple, with local guidance when you need it.',
   },
 ] as const;
 

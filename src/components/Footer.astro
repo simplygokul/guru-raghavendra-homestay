@@ -18,9 +18,7 @@ const year = new Date().getFullYear();
     <div>
       <p class="site-footer__name">{businessName}</p>
       <p class="site-footer__tag">{brandLine}</p>
-      <p class="site-footer__nap">
-        {location.locality}, {location.district}, {location.region}, {location.country}
-      </p>
+      <p class="site-footer__nap">{location.formattedAddress}</p>
       <p class="site-footer__nap">
         WhatsApp:
         <a

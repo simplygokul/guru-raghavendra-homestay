@@ -3,13 +3,12 @@ import { businessName, contact, location, siteUrl } from '../data/property';
 export function lodgingBusinessSchema(extra: Record<string, unknown> = {}) {
   const address: Record<string, unknown> = {
     '@type': 'PostalAddress',
+    streetAddress: location.streetAddress,
     addressLocality: location.locality,
     addressRegion: location.region,
+    postalCode: location.postalCode,
     addressCountry: 'IN',
   };
-
-  if (location.streetAddress) address.streetAddress = location.streetAddress;
-  if (location.postalCode) address.postalCode = location.postalCode;
 
   const data: Record<string, unknown> = {
     '@context': 'https://schema.org',

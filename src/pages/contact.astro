@@ -38,8 +38,7 @@ const jsonLd = [
         <p class="eyebrow">Contact & Location</p>
         <h1>{seo.h1}</h1>
         <p class="lede">
-          Reach us directly on WhatsApp or phone. No complicated forms — just a clear conversation about
-          dates and guests.
+          Reach us directly on WhatsApp. Share your dates and guest count — we will guide you from there.
         </p>
 
         <dl class="details">
@@ -48,15 +47,8 @@ const jsonLd = [
             <dd>{businessName}</dd>
           </div>
           <div>
-            <dt>Location</dt>
-            <dd>
-              {
-                location.streetAddress
-                  ? `${location.streetAddress}, `
-                  : ''
-              }
-              {location.locality}, {location.district}, {location.region}, {location.country}
-            </dd>
+            <dt>Address</dt>
+            <dd>{location.formattedAddress}</dd>
           </div>
           <div>
             <dt>WhatsApp</dt>
@@ -72,20 +64,18 @@ const jsonLd = [
               </a>
             </dd>
           </div>
-          <div>
-            <dt>Phone</dt>
-            <dd>
-              {
-                contact.phone.display && contact.phone.href ? (
+          {
+            contact.phone.display && contact.phone.href ? (
+              <div>
+                <dt>Phone</dt>
+                <dd>
                   <a href={contact.phone.href} data-analytics="call_click" data-location="contact">
                     {contact.phone.display}
                   </a>
-                ) : (
-                  <span class="pending">Primary call number pending confirmation</span>
-                )
-              }
-            </dd>
-          </div>
+                </dd>
+              </div>
+            ) : null
+          }
           <div>
             <dt>Check-in note</dt>
             <dd>{policies.flexibleCheckIn}</dd>
@@ -115,41 +105,27 @@ const jsonLd = [
               </a>
             ) : null
           }
-          {
-            location.mapsDirectionsUrl ? (
-              <a
-                class="btn btn--secondary"
-                href={location.mapsDirectionsUrl}
-                data-analytics="directions_click"
-                data-location="contact-primary"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Get Directions
-              </a>
-            ) : (
-              <span class="pending">Directions link pending map pin confirmation</span>
-            )
-          }
+          <a
+            class="btn btn--secondary"
+            href={location.mapsDirectionsUrl}
+            data-analytics="directions_click"
+            data-location="contact-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Get Directions
+          </a>
         </div>
       </div>
 
-      <div class="map-panel" aria-label="Map">
-        {
-          location.mapsEmbedUrl ? (
-            <iframe
-              title={`Map showing ${businessName}`}
-              src={location.mapsEmbedUrl}
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              allowfullscreen
-            />
-          ) : (
-            <div class="map-panel__placeholder">
-              <p>Google Map embed will appear here after the GBP pin and address are verified.</p>
-            </div>
-          )
-        }
+      <div class="map-panel">
+        <iframe
+          title={`Map showing ${businessName}`}
+          src={location.mapsEmbedUrl}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
       </div>
     </div>
   </section>
@@ -182,29 +158,17 @@ const jsonLd = [
     margin: 0.25rem 0 0;
   }
 
-  .pending {
-    color: var(--color-text-muted);
-    font-style: italic;
-    font-size: var(--text-sm);
-  }
-
   .map-panel,
-  .map-panel iframe,
-  .map-panel__placeholder {
+  .map-panel iframe {
     width: 100%;
     min-height: 22rem;
     border: 0;
     border-radius: var(--radius-lg);
   }
 
-  .map-panel__placeholder {
-    display: grid;
-    place-items: center;
-    text-align: center;
-    padding: 1.5rem;
-    background: var(--color-bg-muted);
-    border: 1px dashed var(--color-border);
-    color: var(--color-text-muted);
+  .map-panel {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
   }
 
   @media (min-width: 900px) {

@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import EnquiryCTA from '../components/EnquiryCTA.astro';
 import FAQ from '../components/FAQ.astro';
-import { accommodationUnits, accommodationHighlights } from '../data/accommodation';
+import { accommodationUnits } from '../data/accommodation';
 import { availableAmenities } from '../data/amenities';
 import { publishedFaqs } from '../data/faq';
 import { policies, stayEnquiryMessage, whatsappLink } from '../data/property';
@@ -13,14 +13,13 @@ import { breadcrumbSchema, faqPageSchema, webPageSchema } from '../lib/schema';
 import livingImage from '../assets/rooms/spacious-common-living-area.jpg';
 import bedroomImage from '../assets/rooms/spacious-bedroom-carved-wood-bed.jpg';
 import bathroomImage from '../assets/rooms/clean-attached-bathroom.jpg';
-import bedroomAlt from '../assets/rooms/bedroom-built-in-shelving.jpg';
+import kitchenCue from '../assets/rooms/kitchen-pass-through.jpg';
 import terraceImage from '../assets/terrace/terrace-overlooking-agricultural-fields.jpg';
+import bedroomAlt from '../assets/rooms/bedroom-built-in-shelving.jpg';
 
 const seo = pageSeo.stay;
 const unit = accommodationUnits[0];
 const waHref = whatsappLink(stayEnquiryMessage(unit.name));
-
-const highlightImages = [bedroomImage, livingImage, bathroomImage];
 
 const faqSchema = faqPageSchema(
   publishedFaqs.map((f) => ({ question: f.question, answer: f.answer! })),
@@ -41,10 +40,10 @@ const jsonLd = [
 ---
 
 <BaseLayout title={seo.title} description={seo.description} path={seo.path} ogImage={seo.ogImage} jsonLd={jsonLd}>
-  <section class="stay-hero section">
-    <div class="container stay-hero__grid">
+  <section class="stay-open section">
+    <div class="container stay-open__grid">
       <div>
-        <p class="eyebrow">Stay / Accommodation</p>
+        <p class="eyebrow">Stay</p>
         <h1>{seo.h1}</h1>
         <p class="lede">{unit.summary}</p>
         <div class="btn-row">
@@ -61,178 +60,167 @@ const jsonLd = [
           <a class="btn btn--secondary" href="/gallery/">See Gallery</a>
         </div>
       </div>
+    </div>
+    <div class="container stay-open__hero reveal">
       <Image
         src={livingImage}
-        alt="Spacious common living area suitable for families and groups"
-        widths={[600, 1000, 1400]}
-        sizes="(max-width: 900px) 100vw, 50vw"
-        class="stay-hero__img"
+        alt="Spacious common living area for families and groups"
+        widths={[900, 1400, 1800]}
+        sizes="100vw"
+        quality={82}
+        class="stay-open__img"
       />
     </div>
   </section>
 
-  <section class="section section--muted">
-    <div class="container">
-      <p class="eyebrow">What guests receive</p>
-      <h2>Accommodation at a glance</h2>
-      <div class="facts">
-        <article>
-          <h3>Kitchen</h3>
-          <p>Kitchen facility available for home-style cooking.</p>
-        </article>
-        <article>
-          <h3>Terrace</h3>
-          <p>Terrace access with agricultural countryside views.</p>
-        </article>
-        <article>
-          <h3>Spaces</h3>
-          <p>Spacious bedrooms and open common areas for families and groups.</p>
-        </article>
-        <article>
-          <h3>Structure</h3>
-          <p class="pending">Exact floors/units, bed counts and guest capacity — pending owner confirmation.</p>
-        </article>
+  <section class="section journey">
+    <div class="container journey__block">
+      <div class="journey__copy reveal">
+        <p class="eyebrow">Common areas</p>
+        <h2>Space where the whole group can gather</h2>
+        <p class="lede">Open living areas with room to move — not cramped lodge rooms.</p>
+      </div>
+      <figure class="reveal">
+        <Image src={bedroomAlt} alt="Bright bedroom with built-in shelving" widths={[700, 1100]} sizes="(max-width: 900px) 100vw, 50vw" quality={80} />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section--muted journey">
+    <div class="container journey__block journey__block--flip">
+      <figure class="reveal">
+        <Image src={bedroomImage} alt="Bedroom with carved wooden bed" widths={[700, 1100]} sizes="(max-width: 900px) 100vw, 50vw" quality={80} />
+      </figure>
+      <div class="journey__copy reveal">
+        <p class="eyebrow">Bedrooms</p>
+        <h2>Comfortable rooms for restful nights</h2>
+        <p class="lede">Clean finishes, good light and space to unpack after temple visits.</p>
       </div>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <p class="eyebrow">Inside the stay</p>
-      <h2>Rooms & shared spaces</h2>
-      <div class="highlights">
-        {
-          accommodationHighlights.map((item, i) => (
-            <article class="highlight">
-              <Image
-                src={highlightImages[i]}
-                alt={item.title}
-                widths={[400, 700, 1000]}
-                sizes="(max-width: 900px) 100vw, 33vw"
-              />
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </article>
-          ))
-        }
+  <section class="section journey">
+    <div class="container journey__block">
+      <div class="journey__copy reveal">
+        <p class="eyebrow">Kitchen</p>
+        <h2>Cook when it helps your day</h2>
+        <p class="lede">
+          Kitchen access makes longer family stays easier — especially with children or elders who prefer familiar meals.
+        </p>
+      </div>
+      <figure class="reveal">
+        <Image src={kitchenCue} alt="Living area with kitchen pass-through" widths={[700, 1100]} sizes="(max-width: 900px) 100vw, 50vw" quality={80} />
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section--muted journey">
+    <div class="container journey__block journey__block--flip">
+      <figure class="reveal">
+        <Image src={bathroomImage} alt="Clean attached bathroom" widths={[700, 1100]} sizes="(max-width: 900px) 100vw, 50vw" quality={80} />
+      </figure>
+      <div class="journey__copy reveal">
+        <p class="eyebrow">Bathrooms</p>
+        <h2>Clear, bright and well kept</h2>
+        <p class="lede">Simple, modern bathrooms that look the way they feel.</p>
       </div>
     </div>
   </section>
 
-  <section class="section section--muted">
-    <div class="container stay-split">
-      <div>
-        <p class="eyebrow">Verified facilities</p>
-        <h2>Amenities we can confirm today</h2>
-        <ul class="amenity-list">
-          {availableAmenities.map((a) => <li>{a.label}</li>)}
-        </ul>
-        <p class="pending">Wi-Fi, parking capacity, lift, power backup, TV and cooking equipment details remain pending.</p>
+  <section class="section journey">
+    <div class="container journey__block">
+      <div class="journey__copy reveal">
+        <p class="eyebrow">Terrace</p>
+        <h2>Open air and countryside views</h2>
+        <p class="lede">Step up for fields, breeze and a quieter end to the day.</p>
       </div>
-      <div>
-        <Image
-          src={bedroomAlt}
-          alt="Bedroom with built-in shelving and air conditioning"
-          widths={[500, 900]}
-          sizes="(max-width: 900px) 100vw, 45vw"
-          class="stay-split__img"
-        />
-      </div>
+      <figure class="reveal">
+        <Image src={terraceImage} alt="Terrace overlooking agricultural fields" widths={[700, 1100]} sizes="(max-width: 900px) 100vw, 50vw" quality={80} />
+      </figure>
     </div>
   </section>
 
-  <section class="section">
-    <div class="container stay-split">
-      <Image
-        src={terraceImage}
-        alt="Terrace overlooking green fields"
-        widths={[500, 900]}
-        sizes="(max-width: 900px) 100vw, 45vw"
-        class="stay-split__img"
-      />
+  <section class="section section--muted amenities">
+    <div class="container amenities__inner">
       <div>
-        <p class="eyebrow">Flexible arrival</p>
-        <h2>Check-in for temple visitors</h2>
-        <p class="lede">{policies.flexibleCheckIn}</p>
-        <a
-          class="btn btn--primary"
-          href={waHref}
-          data-analytics="stay_enquiry_click"
-          data-location="stay-checkin"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Confirm Availability on WhatsApp
-        </a>
+        <p class="eyebrow">Facilities</p>
+        <h2>What you can count on</h2>
       </div>
+      <ul class="amenity-list">
+        {availableAmenities.map((a) => <li>{a.label}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section arrival">
+    <div class="container container--narrow">
+      <p class="eyebrow">Arrival</p>
+      <h2>Flexible check-in for temple visitors</h2>
+      <p class="lede">{policies.flexibleCheckIn}</p>
+      <a
+        class="btn btn--primary"
+        href={waHref}
+        data-analytics="stay_enquiry_click"
+        data-location="stay-checkin"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Confirm Availability on WhatsApp
+      </a>
     </div>
   </section>
 
   <FAQ items={publishedFaqs} title="Booking & stay questions" />
-  <EnquiryCTA title="Ready to check dates?" text="Tell us the unit interest, dates and guest count — we reply on WhatsApp with clear next steps." />
+  <EnquiryCTA title="Ready to check dates?" text="Share your dates and guest count on WhatsApp — we will guide you from there." />
 </BaseLayout>
 
 <style>
-  .stay-hero__grid,
-  .stay-split {
+  .stay-open {
+    padding-bottom: 0;
+  }
+
+  .stay-open__grid {
+    max-width: 40rem;
+    margin-bottom: 2rem;
+  }
+
+  .stay-open__img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+  }
+
+  .journey__block {
     display: grid;
     gap: var(--space-6);
     align-items: center;
   }
 
-  .stay-hero__img,
-  .stay-split__img,
-  .highlight img {
-    border-radius: var(--radius-lg);
+  .journey figure img {
     width: 100%;
+    border-radius: var(--radius-lg);
   }
 
-  .facts,
-  .highlights {
+  .journey__copy {
+    max-width: 32rem;
+  }
+
+  .amenities__inner {
     display: grid;
-    gap: 1rem;
-    margin-top: var(--space-5);
-  }
-
-  .facts article,
-  .highlight {
-    background: var(--color-bg-elevated);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 1.15rem;
-  }
-
-  .highlight {
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .highlight h3,
-  .highlight p {
-    padding-inline: 1.1rem;
-  }
-
-  .highlight h3 {
-    margin-top: 1rem;
-    font-size: 1.15rem;
-  }
-
-  .highlight p {
-    color: var(--color-text-muted);
-    padding-bottom: 1.15rem;
+    gap: var(--space-5);
   }
 
   .amenity-list {
-    display: grid;
-    gap: 0.55rem;
-    padding: 0;
-    margin: 1rem 0;
     list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.65rem;
   }
 
   .amenity-list li {
     padding-left: 1rem;
     position: relative;
+    color: var(--color-text-muted);
   }
 
   .amenity-list li::before {
@@ -246,25 +234,23 @@ const jsonLd = [
     top: 0.55rem;
   }
 
-  .pending {
-    color: var(--color-text-muted);
-    font-size: var(--text-sm);
-    font-style: italic;
+  .arrival {
+    text-align: left;
   }
 
-  @media (min-width: 800px) {
-    .facts {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .highlights {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .stay-hero__grid,
-    .stay-split {
-      grid-template-columns: 1fr 1fr;
+  @media (min-width: 900px) {
+    .journey__block {
+      grid-template-columns: 1fr 1.1fr;
       gap: var(--space-8);
+    }
+
+    .journey__block--flip {
+      grid-template-columns: 1.1fr 1fr;
+    }
+
+    .amenities__inner {
+      grid-template-columns: 0.8fr 1.2fr;
+      align-items: start;
     }
   }
 </style>
