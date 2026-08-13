@@ -19,9 +19,7 @@ import livingImage from '../assets/rooms/spacious-common-living-area.jpg';
 import bedroomImage from '../assets/rooms/spacious-bedroom-carved-wood-bed.jpg';
 import bathroomImage from '../assets/rooms/clean-attached-bathroom.jpg';
 import terraceImage from '../assets/terrace/terrace-overlooking-agricultural-fields.jpg';
-import kitchenCue from '../assets/rooms/kitchen-pass-through.jpg';
 import bedroomAlt from '../assets/rooms/bedroom-built-in-shelving.jpg';
-import templeCue from '../assets/places/mopidevi-local-context.jpg';
 import kallepalli from '../assets/places/kallepalli.jpg';
 import fields from '../assets/terrace/countryside-panorama.jpg';
 import exterior from '../assets/property/exterior-entrance-approach.jpg';
@@ -143,15 +141,6 @@ const jsonLd = [
   <!-- Family + kitchen woven together -->
   <section class="section section--muted family">
     <div class="container family__grid">
-      <figure class="reveal">
-        <Image
-          src={kitchenCue}
-          alt="Open living space with kitchen pass-through for home-style cooking"
-          widths={[600, 1000]}
-          sizes="(max-width: 900px) 100vw, 48vw"
-          quality={80}
-        />
-      </figure>
       <div class="reveal">
         <p class="eyebrow">Family stays</p>
         <h2>Space for the group. Kitchen when you need it.</h2>
@@ -216,15 +205,6 @@ const jsonLd = [
   <!-- VISIT — Temple as editorial chapter -->
   <section class="section temple-chapter">
     <div class="container temple-chapter__grid">
-      <figure class="reveal">
-        <Image
-          src={templeCue}
-          alt="Sri Guru Raghavendra HomeStay in Mopidevi, a calm base near the temple"
-          widths={[700, 1100]}
-          sizes="(max-width: 900px) 100vw, 55vw"
-          quality={80}
-        />
-      </figure>
       <div class="reveal">
         <p class="eyebrow">Visit</p>
         <h2>Mopidevi Temple, close to your stay</h2>
@@ -476,6 +456,12 @@ const jsonLd = [
     align-items: center;
   }
 
+  .family__grid,
+  .temple-chapter__grid {
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+
   .leisure {
     position: relative;
     min-height: min(52vh, 29rem);
@@ -637,8 +623,6 @@ const jsonLd = [
   }
 
   @media (min-width: 960px) {
-    .family__grid,
-    .temple-chapter__grid,
     .hosts__grid,
     .location__grid {
       grid-template-columns: 1fr 1fr;

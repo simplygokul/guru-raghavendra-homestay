@@ -46,7 +46,7 @@ export const pageSeo: Record<string, PageSeo> = {
     path: '/gallery/',
     title: `${businessName} Gallery | Mopidevi`,
     description:
-      'See the rooms, kitchen, bathrooms, terrace, exterior and countryside surroundings of Sri Guru Raghavendra HomeStay in Mopidevi.',
+      'See the rooms, common spaces, bathrooms, terrace, exterior and countryside surroundings of Sri Guru Raghavendra HomeStay in Mopidevi.',
     h1: 'Property Gallery',
     ogImage: '/og/gallery.jpg',
   },

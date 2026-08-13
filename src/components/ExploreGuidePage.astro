@@ -8,22 +8,10 @@ import { defaultWhatsAppMessage, whatsappLink } from '../data/property';
 import { breadcrumbSchema, webPageSchema } from '../lib/schema';
 
 import fields from '../assets/terrace/terrace-overlooking-agricultural-fields.jpg';
-import countryside from '../assets/terrace/countryside-panorama.jpg';
-import mopidevi from '../assets/places/mopidevi-area.jpg';
-import kallepalli from '../assets/places/kallepalli.jpg';
-import local from '../assets/places/mopidevi-local-context.jpg';
 
 type Props = { content: ExploreGuideContent };
 const { content } = Astro.props;
 const waHref = whatsappLink(defaultWhatsAppMessage);
-
-const imageFor = (place: ExplorePlace) => {
-  if (place.id === 'hamsaladeevi' || place.id === 'manginapudi') return countryside;
-  if (place.id === 'pedakallepalli') return kallepalli;
-  if (place.id === 'diviseema') return fields;
-  if (place.id === 'vijayawada') return mopidevi;
-  return local;
-};
 
 const order: ExplorePlace['group'][] = ['nearby', 'halfday', 'culture', 'fullday', 'countryside'];
 const featured = content.places.find((p) => p.featured) ?? content.places[0];
@@ -92,16 +80,7 @@ function mapsHref(query?: string) {
   </section>
 
   <section class="section feature">
-    <div class="container feature__grid">
-      <figure>
-        <Image
-          src={imageFor(featured)}
-          alt={featured.name}
-          widths={[800, 1200]}
-          sizes="(max-width: 900px) 100vw, 56vw"
-          quality={80}
-        />
-      </figure>
+    <div class="container container--narrow">
       <div>
         <p class="eyebrow">{content.groupLabels[featured.group]}</p>
         <h2>{featured.name}</h2>
@@ -138,15 +117,6 @@ function mapsHref(query?: string) {
             <div class:list={['place-list', isMajor && 'place-list--major']}>
               {places.map((place) => (
                 <article class:list={['place', isMajor && 'place--major']}>
-                  {isMajor ? (
-                    <Image
-                      src={imageFor(place)}
-                      alt={place.name}
-                      widths={[500, 900]}
-                      sizes="(max-width: 800px) 100vw, 46vw"
-                      quality={76}
-                    />
-                  ) : null}
                   <div>
                     <h3>{place.name}</h3>
                     <p>{place.text}</p>
@@ -240,18 +210,6 @@ function mapsHref(query?: string) {
     margin: 0;
   }
 
-  .feature__grid {
-    display: grid;
-    gap: var(--space-5);
-    align-items: center;
-  }
-
-  .feature figure img,
-  .place--major img {
-    width: 100%;
-    border-radius: var(--radius-lg);
-  }
-
   .group-head {
     margin-bottom: 1rem;
   }
@@ -276,8 +234,8 @@ function mapsHref(query?: string) {
   }
 
   .place--major {
-    display: grid;
-    gap: 0.85rem;
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.15rem;
   }
 
   .trips {
@@ -290,20 +248,10 @@ function mapsHref(query?: string) {
   }
 
   @media (min-width: 860px) {
-    .feature__grid {
-      grid-template-columns: 1.2fr 0.9fr;
-      gap: var(--space-7);
-    }
-
     .place-list:not(.place-list--major) {
       grid-template-columns: 1fr 1fr;
       gap: 1.25rem 2rem;
     }
 
-    .place--major {
-      grid-template-columns: 0.95fr 1.05fr;
-      align-items: center;
-      gap: 1.5rem;
-    }
   }
 </style>

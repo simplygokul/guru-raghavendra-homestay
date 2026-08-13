@@ -5,7 +5,6 @@
 
 export type GalleryCategory =
   | 'rooms'
-  | 'kitchen'
   | 'bathrooms'
   | 'common'
   | 'terrace'
@@ -57,7 +56,6 @@ export const galleryImages: GalleryImage[] = [
 export const galleryCategories: { id: GalleryCategory | 'all'; label: string }[] = [
   { id: 'all', label: 'All' },
   { id: 'rooms', label: 'Rooms' },
-  { id: 'kitchen', label: 'Kitchen' },
   { id: 'bathrooms', label: 'Bathrooms' },
   { id: 'common', label: 'Common Spaces' },
   { id: 'terrace', label: 'Terrace' },

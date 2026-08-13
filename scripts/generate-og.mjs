@@ -8,7 +8,7 @@ const outputDir = path.join(root, 'public', 'og');
 const cards = [
   ['home.jpg', 'src/assets/property/homestay-exterior-hero-daylight.jpg', 'Spacious, peaceful stay', 'Sri Guru Raghavendra HomeStay · Mopidevi'],
   ['stay.jpg', 'src/assets/rooms/spacious-bedroom-carved-wood-bed.jpg', 'Comfortable family stay', 'Space to settle in near Mopidevi Temple'],
-  ['temple.jpg', 'src/assets/places/mopidevi-local-context.jpg', 'Mopidevi Temple guide', 'Stories, rituals, timings and visitor guidance'],
+  ['temple.jpg', 'src/assets/terrace/countryside-panorama.jpg', 'Mopidevi Temple guide', 'Stories, rituals, timings and visitor guidance'],
   ['explore.jpg', 'src/assets/terrace/terrace-overlooking-agricultural-fields.jpg', 'Explore around Mopidevi', 'Temple towns, culture and Krishna delta countryside'],
   ['gallery.jpg', 'src/assets/rooms/spacious-common-living-area.jpg', 'See the homestay', 'Rooms, common spaces, terrace and surroundings'],
   ['contact.jpg', 'src/assets/property/exterior-entrance-approach.jpg', 'Plan your Mopidevi stay', 'WhatsApp, call or get directions'],

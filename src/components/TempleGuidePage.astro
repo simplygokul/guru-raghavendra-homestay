@@ -1,12 +1,10 @@
 ---
-import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import EnquiryCTA from '../components/EnquiryCTA.astro';
 import LanguageSwitch from '../components/LanguageSwitch.astro';
 import type { TempleGuideContent } from '../data/templeGuide';
 import { defaultWhatsAppMessage, whatsappLink } from '../data/property';
 import { breadcrumbSchema, webPageSchema } from '../lib/schema';
-import templeCue from '../assets/places/mopidevi-local-context.jpg';
 
 type Props = { content: TempleGuideContent };
 const { content } = Astro.props;
@@ -41,7 +39,7 @@ const alts = [
   alternateLanguages={alts}
 >
   <header class="guide-hero section--tight">
-    <div class="container guide-hero__grid">
+    <div class="container container--narrow">
       <div>
         <p class="eyebrow">{content.lang === 'te' ? 'ఆలయ గైడ్' : 'Temple guide'}</p>
         <LanguageSwitch
@@ -52,15 +50,6 @@ const alts = [
         <h1>{content.h1}</h1>
         <p class="lede">{content.intro[0]}</p>
       </div>
-      <figure>
-        <Image
-          src={templeCue}
-          alt={content.lang === 'te' ? 'మోపిదేవి ఆలయ పట్టణంలోని హోమ్‌స్టే' : 'Homestay in Mopidevi temple town'}
-          widths={[700, 1100]}
-          sizes="(max-width: 900px) 100vw, 46vw"
-          quality={80}
-        />
-      </figure>
     </div>
   </header>
 
@@ -183,17 +172,6 @@ const alts = [
 </BaseLayout>
 
 <style>
-  .guide-hero__grid {
-    display: grid;
-    gap: var(--space-5);
-    align-items: end;
-  }
-
-  .guide-hero figure img {
-    width: 100%;
-    border-radius: var(--radius-lg);
-  }
-
   .prose h2 {
     margin-top: 0.25rem;
     margin-bottom: 0.85rem;
@@ -316,11 +294,6 @@ const alts = [
   }
 
   @media (min-width: 860px) {
-    .guide-hero__grid {
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: var(--space-7);
-    }
-
     .mid-cta__inner {
       grid-template-columns: 1fr auto;
     }

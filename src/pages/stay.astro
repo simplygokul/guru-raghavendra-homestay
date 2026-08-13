@@ -13,7 +13,6 @@ import { breadcrumbSchema, faqPageSchema, webPageSchema } from '../lib/schema';
 import livingImage from '../assets/rooms/spacious-common-living-area.jpg';
 import bedroomImage from '../assets/rooms/spacious-bedroom-carved-wood-bed.jpg';
 import bathroomImage from '../assets/rooms/clean-attached-bathroom.jpg';
-import kitchenCue from '../assets/rooms/kitchen-pass-through.jpg';
 import terraceImage from '../assets/terrace/terrace-overlooking-agricultural-fields.jpg';
 import bedroomAlt from '../assets/rooms/bedroom-built-in-shelving.jpg';
 
@@ -74,7 +73,7 @@ const jsonLd = [
   </section>
 
   <section class="section journey">
-    <div class="container journey__block">
+    <div class="container container--narrow">
       <div class="journey__copy reveal">
         <p class="eyebrow">Common areas</p>
         <h2>Space where the whole group can gather</h2>
@@ -108,9 +107,6 @@ const jsonLd = [
           Kitchen access makes longer family stays easier — especially with children or elders who prefer familiar meals.
         </p>
       </div>
-      <figure class="reveal">
-        <Image src={kitchenCue} alt="Living area with kitchen pass-through" widths={[700, 1100]} sizes="(max-width: 900px) 100vw, 50vw" quality={80} />
-      </figure>
     </div>
   </section>
 
