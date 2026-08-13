@@ -143,6 +143,13 @@ const alts = [
       </div>
     </section>
 
+    <section class="section--tight section--muted" id="how-to-reach">
+      <div class="container container--narrow prose">
+        <h2>{content.reachHeading}</h2>
+        {content.reach.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </section>
+
     <section class="mid-cta section--tight">
       <div class="container mid-cta__inner">
         <div>
@@ -162,7 +169,7 @@ const alts = [
       </div>
     </section>
 
-    <section class="section--tight section--muted" id="tips">
+    <section class="section--tight" id="tips">
       <div class="container container--narrow prose">
         <h2>{content.tipsHeading}</h2>
         <ul>

@@ -20,6 +20,8 @@ export type TempleGuideContent = {
   festivals: string;
   timingsHeading: string;
   timings: string;
+  reachHeading: string;
+  reach: string[];
   tipsHeading: string;
   tips: string[];
   midCtaHeading: string;
@@ -121,7 +123,12 @@ export const templeGuideEn: TempleGuideContent = {
     'Commonly mentioned festival periods include Subrahmanya Shashti, Skanda Shashti, Nagula Chavithi and the Karthika season. Special rituals and crowd patterns can change from year to year, so current-year schedules should be checked before travel.',
   timingsHeading: 'Current Published Timings',
   timings:
-    'Current published timings are commonly listed as approximately 5:30 AM to 1:00 PM and 4:00 PM to 8:00 PM. Special-day and festival schedules may differ.',
+    'Current published timings are generally listed as 5:30 AM–1:00 PM and 4:00 PM–8:00 PM. Timings may change on festivals and special days, so visitors should confirm before travel.',
+  reachHeading: 'How to Reach Mopidevi',
+  reach: [
+    'Mopidevi is accessible by road from Vijayawada and Machilipatnam, with routes continuing through the Krishna delta towns toward the temple.',
+    'Visitors arriving from the Repalle side can approach Mopidevi through the regional road network. Public transport availability and road conditions can change, so confirm your preferred route before starting.',
+  ],
   tipsHeading: 'Practical Visitor Tips',
   tips: [
     'Arrive early on busy days if you prefer a calmer darshan.',
@@ -229,7 +236,12 @@ export const templeGuideTe: TempleGuideContent = {
     'సుబ్రహ్మణ్య షష్ఠి, స్కంద షష్ఠి, నాగుల చవితి, కార్తీక మాసం వంటి సందర్భాలలో ఎక్కువ మంది భక్తులు వస్తారని సాధారణంగా చెప్పబడుతుంది. ప్రతి సంవత్సరం ప్రత్యేక పూజలు, తేదీలు, సమయాలు మారవచ్చు కాబట్టి ప్రయాణానికి ముందు తాజా వివరాలు తెలుసుకోవడం మంచిది.',
   timingsHeading: 'ప్రస్తుతం ప్రచారంలో ఉన్న దర్శన సమయాలు',
   timings:
-    'ప్రస్తుతం ప్రచారంలో ఉన్న సమాచారం ప్రకారం ఆలయం సాధారణంగా ఉదయం 5:30 నుంచి మధ్యాహ్నం 1:00 వరకు, సాయంత్రం 4:00 నుంచి రాత్రి 8:00 వరకు తెరిచి ఉంటుంది. పండుగలు మరియు ప్రత్యేక రోజులలో సమయాలు మారవచ్చు.',
+    'ప్రస్తుతం ప్రచారంలో ఉన్న దర్శన సమయాలు సాధారణంగా ఉదయం 5:30–మధ్యాహ్నం 1:00 మరియు సాయంత్రం 4:00–రాత్రి 8:00గా పేర్కొంటున్నారు. పండుగలు, ప్రత్యేక రోజులలో సమయాలు మారవచ్చు కాబట్టి ప్రయాణానికి ముందు నిర్ధారించుకోండి.',
+  reachHeading: 'మోపిదేవికి ఎలా చేరుకోవాలి?',
+  reach: [
+    'విజయవాడ మరియు మచిలీపట్నం నుంచి రోడ్డు మార్గంలో కృష్ణా డెల్టా పట్టణాల గుండా మోపిదేవికి చేరుకోవచ్చు.',
+    'రేపల్లె వైపు నుంచి వచ్చే వారు ప్రాంతీయ రహదారుల ద్వారా మోపిదేవికి చేరుకోవచ్చు. ప్రజా రవాణా సదుపాయాలు, రహదారి పరిస్థితులు మారవచ్చు కాబట్టి బయలుదేరే ముందు మీ మార్గాన్ని నిర్ధారించుకోండి.',
+  ],
   tipsHeading: 'యాత్రికులకు ఉపయోగకరమైన సూచనలు',
   tips: [
     'రద్దీ రోజుల్లో ప్రశాంతమైన దర్శనం కావాలంటే ఉదయం త్వరగా రావడం మంచిది.',

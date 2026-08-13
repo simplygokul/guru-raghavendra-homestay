@@ -55,7 +55,7 @@ export const exploreGuideEn: ExploreGuideContent = {
     {
       id: 'pedakallepalli',
       name: 'Pedakallepalli / Kallepalli',
-      text: 'Best positioned as a quiet local temple-town stop with rural atmosphere, useful as part of a short spiritual circuit around Mopidevi.',
+      text: 'A quiet local temple-town stop with a rural atmosphere, Pedakallepalli fits naturally into a short spiritual circuit around Mopidevi.',
       group: 'nearby',
       mapsQuery: 'Pedakallepalli Krishna district',
     },
@@ -69,7 +69,7 @@ export const exploreGuideEn: ExploreGuideContent = {
     {
       id: 'challapalli',
       name: 'Challapalli Rajavari Fort / Palace Area',
-      text: 'Challapalli adds a nearby heritage layer. Local accounts connect the Challapalli zamindari family with regional patronage. Treat it as a short architecture/history stop after confirming current visitor access.',
+      text: 'Challapalli adds a nearby heritage layer. Local accounts connect the Challapalli zamindari family with regional patronage. It can be a short architecture-and-history stop; visitors should confirm current access before travelling.',
       group: 'halfday',
       mapsQuery: 'Challapalli Fort Andhra Pradesh',
     },
@@ -83,7 +83,7 @@ export const exploreGuideEn: ExploreGuideContent = {
     {
       id: 'manginapudi',
       name: 'Manginapudi Beach',
-      text: 'A relaxed coastal option for families wanting sea views and an evening break after temple travel. Position it as an easy leisure stop rather than a resort destination.',
+      text: 'A relaxed coastal option for families wanting sea views and an evening break after temple travel. It is best enjoyed as a simple leisure stop rather than a resort destination.',
       group: 'halfday',
       mapsQuery: 'Manginapudi Beach',
     },
@@ -111,7 +111,7 @@ export const exploreGuideEn: ExploreGuideContent = {
     {
       id: 'srikakulam-mahavishnu',
       name: 'Andhra Mahavishnu Temple, Srikakulam',
-      text: 'Regional tradition connects this temple with Sri Krishnadevaraya and divine inspiration associated with the composition of Amuktamalyada. It works especially well as a story-led spiritual/literary destination.',
+      text: 'Regional tradition connects this temple with Sri Krishnadevaraya and divine inspiration associated with the composition of Amuktamalyada, giving the visit a distinctive spiritual and literary character.',
       group: 'culture',
       mapsQuery: 'Andhra Mahavishnu Temple Srikakulam Krishna',
     },
@@ -173,7 +173,7 @@ export const exploreGuideTe: ExploreGuideContent = {
     {
       id: 'pedakallepalli',
       name: 'పెదకళ్లేపల్లి / కళ్లేపల్లి',
-      text: 'ఇది పెద్ద పర్యాటక కేంద్రం కంటే ప్రశాంతమైన స్థానిక దేవాలయ గ్రామంగా చూపడం మంచిది. మోపిదేవి చుట్టూ చిన్న ఆధ్యాత్మిక సర్క్యూట్‌లో భాగంగా అనుకూలంగా ఉంటుంది.',
+      text: 'పెదకళ్లేపల్లి ప్రశాంతమైన స్థానిక దేవాలయ గ్రామం. గ్రామీణ వాతావరణంతో మోపిదేవి చుట్టూ చిన్న ఆధ్యాత్మిక యాత్రలో భాగంగా బాగా సరిపోతుంది.',
       group: 'nearby',
       mapsQuery: 'Pedakallepalli Krishna district',
     },
@@ -201,7 +201,7 @@ export const exploreGuideTe: ExploreGuideContent = {
     {
       id: 'manginapudi',
       name: 'మంగినపూడి బీచ్',
-      text: 'దేవాలయ యాత్ర తర్వాత కుటుంబంతో సముద్ర దృశ్యాలు చూసి ప్రశాంతంగా గడపడానికి మంచి తీరప్రాంత ఎంపిక. రిసార్ట్ బీచ్‌గా కాకుండా సింపుల్ లీజర్ స్టాప్‌గా చూపడం సరైంది.',
+      text: 'దేవాలయ యాత్ర తర్వాత కుటుంబంతో సముద్ర దృశ్యాలు చూసి ప్రశాంతంగా గడపడానికి మంచి తీరప్రాంత ఎంపిక. ఇది రిసార్ట్ అనుభవం కంటే సరళమైన విశ్రాంతి ప్రదేశంగా బాగా సరిపోతుంది.',
       group: 'halfday',
       mapsQuery: 'Manginapudi Beach',
     },
@@ -229,7 +229,7 @@ export const exploreGuideTe: ExploreGuideContent = {
     {
       id: 'srikakulam-mahavishnu',
       name: 'శ్రీకాకుళం ఆంధ్ర మహావిష్ణు ఆలయం',
-      text: 'స్థానిక సాహిత్య సంప్రదాయం ప్రకారం శ్రీకృష్ణదేవరాయలు ఇక్కడ స్వామిని దర్శించి, ఆముక్తమాల్యద రచనకు సంబంధించిన దివ్య ప్రేరణ పొందారనే కథ ప్రసిద్ధి. సాధారణ ఆలయ కార్డు కంటే కథతో చెప్పదగిన ఆధ్యాత్మిక-సాహిత్య ప్రదేశం.',
+      text: 'స్థానిక సాహిత్య సంప్రదాయం ప్రకారం శ్రీకృష్ణదేవరాయలు ఇక్కడ స్వామిని దర్శించి, ఆముక్తమాల్యద రచనకు సంబంధించిన దివ్య ప్రేరణ పొందారనే కథ ప్రసిద్ధి. ఈ అనుబంధం ఆలయానికి ప్రత్యేకమైన ఆధ్యాత్మిక మరియు సాహిత్య ప్రాధాన్యాన్ని ఇస్తుంది.',
       group: 'culture',
       mapsQuery: 'Andhra Mahavishnu Temple Srikakulam Krishna',
     },
